@@ -1,0 +1,37 @@
+{
+  "name": "excelwriter",
+  "version": "0.1.0",
+  "description": "A wrapper around libxlsxwriter.",
+  "main": "index.js",
+  "files": [
+    "binding.gyp",
+    "index.js",
+    "index.d.ts",
+    "src/*.{cc,h}",
+    "src/libxlsxwriter/License.txt",
+    "src/libxlsxwriter/src/*.c",
+    "src/libxlsxwriter/include/**/*.h",
+    "src/libxlsxwriter/third_party/minizip/MiniZip64_info.txt",
+    "src/libxlsxwriter/third_party/minizip/*.{c,h}",
+    "src/libxlsxwriter/third_party/md5/*.{c,h}"
+  ],
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohd-akram/excelwriter.git"
+  },
+  "keywords": [
+    "excel",
+    "xlsx",
+    "libxlsxwriter"
+  ],
+  "author": "Mohamed Akram",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohd-akram/excelwriter/issues"
+  },
+  "homepage": "https://github.com/mohd-akram/excelwriter#readme",
+  "dependencies": {
+    "node-addon-api": "^5.0.0"
+  }
+}
