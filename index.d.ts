@@ -1,5 +1,8 @@
 namespace XLSX {
   class Format {
+    setBgColor(color: number): void;
+    setFgColor(color: number): void;
+    setFontColor(color: number): void;
     setBold(): void;
     setNumFormat(format: string): void;
   }
