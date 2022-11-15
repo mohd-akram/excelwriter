@@ -22,6 +22,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
               "setColumn",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Worksheet::WriteDatetime>(
+              "writeDatetime",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
           InstanceMethod<&Worksheet::WriteNumber>(
               "writeNumber",
               static_cast<napi_property_attributes>(napi_writable |
@@ -84,6 +88,23 @@ Napi::Value Worksheet::SetColumn(const Napi::CallbackInfo& info) {
                        info[1].As<Napi::Number>().Uint32Value(),
                        info[2].As<Napi::Number>(),
                        Format::Get(info[3]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::WriteDatetime(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  auto date = info[2].As<Napi::Object>();
+  auto offset = date.Get("getTimezoneOffset")
+                    .As<Napi::Function>()
+                    .Call(date, {})
+                    .As<Napi::Number>()
+                    .Int32Value() *
+                60;
+  worksheet_write_unixtime(worksheet,
+                           info[0].As<Napi::Number>(),
+                           info[1].As<Napi::Number>().Uint32Value(),
+                           info[2].As<Napi::Date>() / 1000 - offset,
+                           Format::Get(info[3]));
   return env.Undefined();
 }
 

@@ -11,6 +11,10 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
                                   "setBold",
                                   static_cast<napi_property_attributes>(
                                       napi_writable | napi_configurable)),
+                              InstanceMethod<&Format::SetNumFormat>(
+                                  "setNumFormat",
+                                  static_cast<napi_property_attributes>(
+                                      napi_writable | napi_configurable)),
                           });
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
@@ -47,5 +51,11 @@ Napi::Value Format::NewInstance(Napi::Env env, lxw_format* format) {
 Napi::Value Format::SetBold(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_bold(format);
+  return env.Undefined();
+}
+
+Napi::Value Format::SetNumFormat(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_num_format(format, info[0].As<Napi::String>().Utf8Value().c_str());
   return env.Undefined();
 }

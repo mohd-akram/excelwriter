@@ -1,12 +1,14 @@
 namespace XLSX {
   class Format {
     setBold(): void;
+    setNumFormat(format: string): void;
   }
 
   class Worksheet {
     insertChart(row: number, column: number, chart: ExcelWriter.Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
     setColumn(row: number, column: number, width: number): void;
+    writeDatetime(row: number, column: number, date: Date, format?: Format): void;
     writeNumber(row: number, column: number, number: number, format?: Format): void;
     writeString(row: number, column: number, string: string, format?: Format): void;
   }

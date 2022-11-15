@@ -11,6 +11,7 @@ class Worksheet : public Napi::ObjectWrap<Worksheet> {
   Napi::Value InsertChart(const Napi::CallbackInfo& info);
   Napi::Value InsertImage(const Napi::CallbackInfo& info);
   Napi::Value SetColumn(const Napi::CallbackInfo& info);
+  Napi::Value WriteDatetime(const Napi::CallbackInfo& info);
   Napi::Value WriteNumber(const Napi::CallbackInfo& info);
   Napi::Value WriteString(const Napi::CallbackInfo& info);
   lxw_worksheet* worksheet = nullptr;
