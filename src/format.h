@@ -11,8 +11,10 @@ class Format : public Napi::ObjectWrap<Format> {
  private:
   Napi::Value SetBgColor(const Napi::CallbackInfo& info);
   Napi::Value SetFgColor(const Napi::CallbackInfo& info);
+  Napi::Value SetBorderColor(const Napi::CallbackInfo& info);
   Napi::Value SetFontColor(const Napi::CallbackInfo& info);
   Napi::Value SetBold(const Napi::CallbackInfo& info);
+  Napi::Value SetBorder(const Napi::CallbackInfo& info);
   Napi::Value SetNumFormat(const Napi::CallbackInfo& info);
   lxw_format* format = nullptr;
 };

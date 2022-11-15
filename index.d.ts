@@ -2,8 +2,10 @@ namespace XLSX {
   class Format {
     setBgColor(color: number): void;
     setFgColor(color: number): void;
+    setBorderColor(color: number): void;
     setFontColor(color: number): void;
     setBold(): void;
+    setBorder(style: ExcelWriter.Border): void;
     setNumFormat(format: string): void;
   }
 
@@ -127,6 +129,37 @@ namespace ExcelWriter {
     /** Yellow */
     YELLOW_COLOR = 0xffff00,
   };
+
+  enum Border {
+    /** No border */
+    NONE_BORDER,
+    /** Thin border style */
+    THIN_BORDER,
+    /** Medium border style */
+    MEDIUM_BORDER,
+    /** Dashed border style */
+    DASHED_BORDER,
+    /** Dotted border style */
+    DOTTED_BORDER,
+    /** Thick border style */
+    THICK_BORDER,
+    /** Double border style */
+    DOUBLE_BORDER,
+    /** Hair border style */
+    HAIR_BORDER,
+    /** Medium dashed border style */
+    MEDIUM_DASHED_BORDER,
+    /** Dash-dot border style */
+    DASH_DOT_BORDER,
+    /** Medium dash-dot border style */
+    MEDIUM_DASH_DOT_BORDER,
+    /** Dash-dot-dot border style */
+    DASH_DOT_DOT_BORDER,
+    /** Medium dash-dot-dot border style */
+    MEDIUM_DASH_DOT_DOT_BORDER,
+    /** Slant dash-dot border style */
+    SLANT_DASH_DOT_BORDER,
+  }
 
   interface ChartFont {
     /** The chart font name, such as "Arial" or "Calibri". */

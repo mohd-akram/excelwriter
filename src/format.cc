@@ -16,12 +16,20 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
               "setFgColor",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Format::SetBorderColor>(
+              "setBorderColor",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
           InstanceMethod<&Format::SetFontColor>(
               "setFontColor",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
           InstanceMethod<&Format::SetBold>(
               "setBold",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
+          InstanceMethod<&Format::SetBorder>(
+              "setBorder",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
           InstanceMethod<&Format::SetNumFormat>(
@@ -73,6 +81,12 @@ Napi::Value Format::SetFgColor(const Napi::CallbackInfo& info) {
   return env.Undefined();
 }
 
+Napi::Value Format::SetBorderColor(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_border_color(format, info[0].As<Napi::Number>());
+  return env.Undefined();
+}
+
 Napi::Value Format::SetFontColor(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_font_color(format, info[0].As<Napi::Number>());
@@ -82,6 +96,12 @@ Napi::Value Format::SetFontColor(const Napi::CallbackInfo& info) {
 Napi::Value Format::SetBold(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_bold(format);
+  return env.Undefined();
+}
+
+Napi::Value Format::SetBorder(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_border(format, info[0].As<Napi::Number>().Uint32Value());
   return env.Undefined();
 }
 

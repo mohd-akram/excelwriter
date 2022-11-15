@@ -11,6 +11,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   Format::Init(env, exports);
   Workbook::Init(env, exports);
   Worksheet::Init(env, exports);
+
   auto colors = Napi::Object::New(env);
   colors.Set("BLACK_COLOR", Napi::Number::New(env, LXW_COLOR_BLACK));
   colors.Set("BLUE_COLOR", Napi::Number::New(env, LXW_COLOR_BLUE));
@@ -29,6 +30,30 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   colors.Set("WHITE_COLOR", Napi::Number::New(env, LXW_COLOR_WHITE));
   colors.Set("YELLOW_COLOR", Napi::Number::New(env, LXW_COLOR_YELLOW));
   exports.Set("Color", colors);
+
+  auto borders = Napi::Object::New(env);
+
+  borders["THIN_BORDER"] = Napi::Number::New(env, LXW_BORDER_THIN);
+  borders["MEDIUM_BORDER"] = Napi::Number::New(env, LXW_BORDER_MEDIUM);
+  borders["DASHED_BORDER"] = Napi::Number::New(env, LXW_BORDER_DASHED);
+  borders["DOTTED_BORDER"] = Napi::Number::New(env, LXW_BORDER_DOTTED);
+  borders["THICK_BORDER"] = Napi::Number::New(env, LXW_BORDER_THICK);
+  borders["DOUBLE_BORDER"] = Napi::Number::New(env, LXW_BORDER_DOUBLE);
+  borders["HAIR_BORDER"] = Napi::Number::New(env, LXW_BORDER_HAIR);
+  borders["MEDIUM_DASHED_BORDER"] =
+      Napi::Number::New(env, LXW_BORDER_MEDIUM_DASHED);
+  borders["DASH_DOT_BORDER"] = Napi::Number::New(env, LXW_BORDER_DASH_DOT);
+  borders["MEDIUM_DASH_DOT_BORDER"] =
+      Napi::Number::New(env, LXW_BORDER_MEDIUM_DASH_DOT);
+  borders["DASH_DOT_DOT_BORDER"] =
+      Napi::Number::New(env, LXW_BORDER_DASH_DOT_DOT);
+  borders["MEDIUM_DASH_DOT_DOT_BORDER"] =
+      Napi::Number::New(env, LXW_BORDER_MEDIUM_DASH_DOT_DOT);
+  borders["SLANT_DASH_DOT_BORDER"] =
+      Napi::Number::New(env, LXW_BORDER_SLANT_DASH_DOT);
+
+  exports["Border"] = borders;
+
   return exports;
 }
 
