@@ -22,6 +22,14 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
               "setColumn",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Worksheet::SetFooter>(
+              "setFooter",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
+          InstanceMethod<&Worksheet::SetHeader>(
+              "setHeader",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
           InstanceMethod<&Worksheet::WriteDatetime>(
               "writeDatetime",
               static_cast<napi_property_attributes>(napi_writable |
@@ -88,6 +96,20 @@ Napi::Value Worksheet::SetColumn(const Napi::CallbackInfo& info) {
                        info[1].As<Napi::Number>().Uint32Value(),
                        info[2].As<Napi::Number>(),
                        Format::Get(info[3]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::SetFooter(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_set_footer(worksheet,
+                       info[0].As<Napi::String>().Utf8Value().c_str());
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::SetHeader(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_set_header(worksheet,
+                       info[0].As<Napi::String>().Utf8Value().c_str());
   return env.Undefined();
 }
 

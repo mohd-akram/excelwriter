@@ -13,6 +13,8 @@ namespace XLSX {
     insertChart(row: number, column: number, chart: ExcelWriter.Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
     setColumn(row: number, column: number, width: number): void;
+    setFooter(footer: string): void;
+    setHeader(header: string): void;
     writeDatetime(row: number, column: number, date: Date, format?: Format): void;
     writeNumber(row: number, column: number, number: number, format?: Format): void;
     writeString(row: number, column: number, string: string, format?: Format): void;
