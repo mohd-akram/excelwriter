@@ -10,6 +10,7 @@ class Worksheet : public Napi::ObjectWrap<Worksheet> {
  private:
   Napi::Value InsertChart(const Napi::CallbackInfo& info);
   Napi::Value InsertImage(const Napi::CallbackInfo& info);
+  Napi::Value MergeRange(const Napi::CallbackInfo& info);
   Napi::Value SetColumn(const Napi::CallbackInfo& info);
   Napi::Value SetRow(const Napi::CallbackInfo& info);
   Napi::Value SetFooter(const Napi::CallbackInfo& info);

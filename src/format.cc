@@ -7,7 +7,11 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
   auto func = DefineClass(
       env,
       "Format",
-      {InstanceMethod<&Format::SetBgColor>(
+      {InstanceMethod<&Format::SetAlign>(
+           "setAlign",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetBgColor>(
            "setBgColor",
            static_cast<napi_property_attributes>(napi_writable |
                                                  napi_configurable)),
@@ -34,6 +38,43 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
            "setNumFormat",
            static_cast<napi_property_attributes>(napi_writable |
                                                  napi_configurable)),
+
+       StaticValue(
+           "NONE_ALIGN", Napi::Number::New(env, LXW_ALIGN_NONE), napi_default),
+       StaticValue(
+           "LEFT_ALIGN", Napi::Number::New(env, LXW_ALIGN_LEFT), napi_default),
+       StaticValue("CENTER_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_CENTER),
+                   napi_default),
+       StaticValue("RIGHT_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_RIGHT),
+                   napi_default),
+       StaticValue(
+           "FILL_ALIGN", Napi::Number::New(env, LXW_ALIGN_FILL), napi_default),
+       StaticValue("JUSTIFY_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_JUSTIFY),
+                   napi_default),
+       StaticValue("CENTER_ACROSS_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_CENTER_ACROSS),
+                   napi_default),
+       StaticValue("DISTRIBUTED_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_DISTRIBUTED),
+                   napi_default),
+       StaticValue("VERTICAL_TOP_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_VERTICAL_TOP),
+                   napi_default),
+       StaticValue("VERTICAL_BOTTOM_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_VERTICAL_BOTTOM),
+                   napi_default),
+       StaticValue("VERTICAL_CENTER_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_VERTICAL_CENTER),
+                   napi_default),
+       StaticValue("VERTICAL_JUSTIFY_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_VERTICAL_JUSTIFY),
+                   napi_default),
+       StaticValue("VERTICAL_DISTRIBUTED_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_VERTICAL_DISTRIBUTED),
+                   napi_default),
 
        StaticValue("NONE_BORDER",
                    Napi::Number::New(env, LXW_BORDER_NONE),
@@ -108,6 +149,12 @@ Napi::Value Format::NewInstance(Napi::Env env, lxw_format* format) {
       ->Get("FormatConstructor")
       .As<Napi::Function>()
       .New({Napi::External<lxw_format>::New(env, format)});
+}
+
+Napi::Value Format::SetAlign(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_align(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
 }
 
 Napi::Value Format::SetBgColor(const Napi::CallbackInfo& info) {

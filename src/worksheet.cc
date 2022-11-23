@@ -18,6 +18,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
               "insertImage",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Worksheet::MergeRange>(
+              "mergeRange",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
           InstanceMethod<&Worksheet::SetColumn>(
               "setColumn",
               static_cast<napi_property_attributes>(napi_writable |
@@ -90,6 +94,18 @@ Napi::Value Worksheet::InsertImage(const Napi::CallbackInfo& info) {
                                 info[1].As<Napi::Number>().Uint32Value(),
                                 buffer.Data(),
                                 buffer.ByteLength());
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::MergeRange(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_merge_range(worksheet,
+                        info[0].As<Napi::Number>(),
+                        info[1].As<Napi::Number>().Uint32Value(),
+                        info[2].As<Napi::Number>(),
+                        info[3].As<Napi::Number>().Uint32Value(),
+                        info[4].As<Napi::String>().Utf8Value().c_str(),
+                        Format::Get(info[5]));
   return env.Undefined();
 }
 

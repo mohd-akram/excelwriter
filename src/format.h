@@ -9,6 +9,7 @@ class Format : public Napi::ObjectWrap<Format> {
   Format(const Napi::CallbackInfo& info);
 
  private:
+  Napi::Value SetAlign(const Napi::CallbackInfo& info);
   Napi::Value SetBgColor(const Napi::CallbackInfo& info);
   Napi::Value SetFgColor(const Napi::CallbackInfo& info);
   Napi::Value SetBorderColor(const Napi::CallbackInfo& info);

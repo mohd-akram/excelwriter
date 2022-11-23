@@ -1,4 +1,33 @@
 declare namespace XLSX {
+  enum Alignment {
+    /** No alignment. Cell will use Excel's default for the data type */
+    NONE_ALIGN = 0,
+    /** Left horizontal alignment */
+    LEFT_ALIGN = 1,
+    /** Center horizontal alignment */
+    CENTER_ALIGN = 2,
+    /** Right horizontal alignment */
+    RIGHT_ALIGN = 3,
+    /** Cell fill horizontal alignment */
+    FILL_ALIGN = 4,
+    /** Justify horizontal alignment */
+    JUSTIFY_ALIGN = 5,
+    /** Center Across horizontal alignment */
+    CENTER_ACROSS_ALIGN = 6,
+    /** Left horizontal alignment */
+    DISTRIBUTED_ALIGN = 7,
+    /** Top vertical alignment */
+    VERTICAL_TOP_ALIGN = 8,
+    /** Bottom vertical alignment */
+    VERTICAL_BOTTOM_ALIGN = 9,
+    /** Center vertical alignment */
+    VERTICAL_CENTER_ALIGN = 10,
+    /** Justify vertical alignment */
+    VERTICAL_JUSTIFY_ALIGN = 11,
+    /** Distributed vertical alignment */
+    VERTICAL_DISTRIBUTED_ALIGN = 12,
+  }
+
   enum BorderStyle {
     /** No border */
     NONE_BORDER = 0,
@@ -80,6 +109,14 @@ declare namespace XLSX {
   class Worksheet {
     insertChart(row: number, column: number, chart: Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
+    mergeRange(
+      firstRow: number,
+      firstColumn: number,
+      lastRow: number,
+      lastColumn: number,
+      string: string,
+      format?: Format
+    ): void;
     setColumn(
       firstColumn: number,
       lastColumn: number,
@@ -143,6 +180,20 @@ declare namespace ExcelWriter {
   }
 
   class Format {
+    static NONE_ALIGN: XLSX.Alignment.NONE_ALIGN;
+    static LEFT_ALIGN: XLSX.Alignment.LEFT_ALIGN;
+    static CENTER_ALIGN: XLSX.Alignment.CENTER_ALIGN;
+    static RIGHT_ALIGN: XLSX.Alignment.RIGHT_ALIGN;
+    static FILL_ALIGN: XLSX.Alignment.FILL_ALIGN;
+    static JUSTIFY_ALIGN: XLSX.Alignment.JUSTIFY_ALIGN;
+    static CENTER_ACROSS_ALIGN: XLSX.Alignment.CENTER_ACROSS_ALIGN;
+    static DISTRIBUTED_ALIGN: XLSX.Alignment.DISTRIBUTED_ALIGN;
+    static VERTICAL_TOP_ALIGN: XLSX.Alignment.VERTICAL_TOP_ALIGN;
+    static VERTICAL_BOTTOM_ALIGN: XLSX.Alignment.VERTICAL_BOTTOM_ALIGN;
+    static VERTICAL_CENTER_ALIGN: XLSX.Alignment.VERTICAL_CENTER_ALIGN;
+    static VERTICAL_JUSTIFY_ALIGN: XLSX.Alignment.VERTICAL_JUSTIFY_ALIGN;
+    static VERTICAL_DISTRIBUTED_ALIGN: XLSX.Alignment.VERTICAL_DISTRIBUTED_ALIGN;
+
     static NONE_BORDER: XLSX.BorderStyle.NONE_BORDER;
     static THIN_BORDER: XLSX.BorderStyle.THIN_BORDER;
     static MEDIUM_BORDER: XLSX.BorderStyle.MEDIUM_BORDER;
@@ -157,6 +208,7 @@ declare namespace ExcelWriter {
     static DASH_DOT_DOT_BORDER: XLSX.BorderStyle.DASH_DOT_DOT_BORDER;
     static MEDIUM_DASH_DOT_DOT_BORDER: XLSX.BorderStyle.MEDIUM_DASH_DOT_DOT_BORDER;
     static SLANT_DASH_DOT_BORDER: XLSX.BorderStyle.SLANT_DASH_DOT_BORDER;
+    setAlign(alignment: Alignment): void;
     setBgColor(color: number): void;
     setFgColor(color: number): void;
     setBorderColor(color: number): void;
@@ -237,6 +289,7 @@ declare namespace ExcelWriter {
     close(): ArrayBuffer;
   }
 
+  type Alignment = XLSX.Alignment;
   type BorderStyle = XLSX.BorderStyle;
   type ChartType = XLSX.ChartType;
   type Worksheet = XLSX.Worksheet;
