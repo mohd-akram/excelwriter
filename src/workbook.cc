@@ -28,7 +28,7 @@ Napi::Object Workbook::Init(Napi::Env env, Napi::Object exports) {
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
       });
-  exports.Set("Workbook", func);
+  exports["Workbook"] = func;
   return exports;
 }
 

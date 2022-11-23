@@ -87,7 +87,7 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
   }
 
   data->Set("FormatConstructor", func);
-  exports.Set("Format", func);
+  exports["Format"] = func;
 
   return exports;
 }

@@ -95,7 +95,7 @@ Napi::Object Chart::Init(Napi::Env env, Napi::Object exports) {
   }
 
   data->Set("ChartConstructor", func);
-  exports.Set("Chart", func);
+  exports["Chart"] = func;
 
   return exports;
 }
