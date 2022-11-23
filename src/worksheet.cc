@@ -22,6 +22,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
               "setColumn",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Worksheet::SetRow>(
+              "setRow",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
           InstanceMethod<&Worksheet::SetFooter>(
               "setFooter",
               static_cast<napi_property_attributes>(napi_writable |
@@ -96,6 +100,15 @@ Napi::Value Worksheet::SetColumn(const Napi::CallbackInfo& info) {
                        info[1].As<Napi::Number>().Uint32Value(),
                        info[2].As<Napi::Number>(),
                        Format::Get(info[3]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::SetRow(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_set_row(worksheet,
+                    info[0].As<Napi::Number>(),
+                    info[1].As<Napi::Number>(),
+                    Format::Get(info[2]));
   return env.Undefined();
 }
 
