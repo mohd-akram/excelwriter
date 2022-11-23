@@ -1,16 +1,16 @@
-namespace XLSX {
+declare namespace XLSX {
   class Format {
     setBgColor(color: number): void;
     setFgColor(color: number): void;
     setBorderColor(color: number): void;
     setFontColor(color: number): void;
     setBold(): void;
-    setBorder(style: ExcelWriter.Border): void;
+    setBorder(style: Border): void;
     setNumFormat(format: string): void;
   }
 
   class Worksheet {
-    insertChart(row: number, column: number, chart: ExcelWriter.Chart): void;
+    insertChart(row: number, column: number, chart: Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
     setColumn(firstColumn: number, lastColumn: number, width: number, format?: Format): void;
     setRow(row: number, height: number, format?: Format): void;
@@ -25,51 +25,54 @@ namespace XLSX {
     /** Area chart. */
     AREA_CHART = 1,
     /** Area chart - stacked. */
-    AREA_STACKED_CHART,
+    AREA_STACKED_CHART = 2,
     /** Area chart - percentage stacked. */
-    AREA_STACKED_PERCENT_CHART,
+    AREA_STACKED_PERCENT_CHART = 3,
     /** Bar chart. */
-    BAR_CHART,
+    BAR_CHART = 4,
     /** Bar chart - stacked. */
-    BAR_STACKED_CHART,
+    BAR_STACKED_CHART = 5,
     /** Bar chart - percentage stacked. */
-    BAR_STACKED_PERCENT_CHART,
+    BAR_STACKED_PERCENT_CHART = 6,
     /** Column chart. */
-    COLUMN_CHART,
+    COLUMN_CHART = 7,
     /** Column chart - stacked. */
-    COLUMN_STACKED_CHART,
+    COLUMN_STACKED_CHART = 8,
     /** Column chart - percentage stacked. */
-    COLUMN_STACKED_PERCENT_CHART,
+    COLUMN_STACKED_PERCENT_CHART = 9,
     /** Doughnut chart. */
-    DOUGHNUT_CHART,
+    DOUGHNUT_CHART = 10,
     /** Line chart. */
-    LINE_CHART,
+    LINE_CHART = 11,
     /** Line chart - stacked. */
-    LINE_STACKED_CHART,
+    LINE_STACKED_CHART = 12,
     /** Line chart - percentage stacked. */
-    LINE_STACKED_PERCENT_CHART,
+    LINE_STACKED_PERCENT_CHART = 13,
     /** Pie chart. */
-    PIE_CHART,
+    PIE_CHART = 14,
     /** Scatter chart. */
-    SCATTER_CHART,
+    SCATTER_CHART = 15,
     /** Scatter chart - straight. */
-    SCATTER_STRAIGHT_CHART,
+    SCATTER_STRAIGHT_CHART = 16,
     /** Scatter chart - straight with markers. */
-    SCATTER_STRAIGHT_WITH_MARKERS_CHART,
+    SCATTER_STRAIGHT_WITH_MARKERS_CHART = 17,
     /** Scatter chart - smooth. */
-    SCATTER_SMOOTH_CHART,
+    SCATTER_SMOOTH_CHART = 18,
     /** Scatter chart - smooth with markers. */
-    SCATTER_SMOOTH_WITH_MARKERS_CHART,
+    SCATTER_SMOOTH_WITH_MARKERS_CHART = 19,
     /** Radar chart. */
-    RADAR_CHART,
+    RADAR_CHART = 20,
     /** Radar chart - with markers. */
-    RADAR_WITH_MARKERS_CHART,
+    RADAR_WITH_MARKERS_CHART = 21,
     /** Radar chart - filled. */
-    RADAR_FILLED_CHART
-  };
+    RADAR_FILLED_CHART = 22
+  }
+
+  type Border = ExcelWriter.Border;
+  type Chart = ExcelWriter.Chart;
 }
 
-namespace ExcelWriter {
+declare namespace ExcelWriter {
   class Chart {
     static AREA_CHART: XLSX.ChartType.AREA_CHART;
     static AREA_STACKED_CHART: XLSX.ChartType.AREA_STACKED_CHART;
@@ -131,7 +134,7 @@ namespace ExcelWriter {
     WHITE_COLOR = 0xffffff,
     /** Yellow */
     YELLOW_COLOR = 0xffff00,
-  };
+  }
 
   enum Border {
     /** No border */
@@ -191,7 +194,7 @@ namespace ExcelWriter {
     charset?: number;
     /** The chart font baseline property. Rarely required, set to 0. */
     baseline?: number;
-  };
+  }
 
   class Workbook {
     addChart(type: ChartType): Chart;
