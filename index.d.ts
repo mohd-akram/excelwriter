@@ -1,24 +1,33 @@
 declare namespace XLSX {
-  class Format {
-    setBgColor(color: number): void;
-    setFgColor(color: number): void;
-    setBorderColor(color: number): void;
-    setFontColor(color: number): void;
-    setBold(): void;
-    setBorder(style: Border): void;
-    setNumFormat(format: string): void;
-  }
-
-  class Worksheet {
-    insertChart(row: number, column: number, chart: Chart): void;
-    insertImage(row: number, column: number, image: Uint8Array): void;
-    setColumn(firstColumn: number, lastColumn: number, width: number, format?: Format): void;
-    setRow(row: number, height: number, format?: Format): void;
-    setFooter(footer: string): void;
-    setHeader(header: string): void;
-    writeDatetime(row: number, column: number, date: Date, format?: Format): void;
-    writeNumber(row: number, column: number, number: number, format?: Format): void;
-    writeString(row: number, column: number, string: string, format?: Format): void;
+  enum BorderStyle {
+    /** No border */
+    NONE_BORDER = 0,
+    /** Thin border style */
+    THIN_BORDER = 1,
+    /** Medium border style */
+    MEDIUM_BORDER = 2,
+    /** Dashed border style */
+    DASHED_BORDER = 3,
+    /** Dotted border style */
+    DOTTED_BORDER = 4,
+    /** Thick border style */
+    THICK_BORDER = 5,
+    /** Double border style */
+    DOUBLE_BORDER = 6,
+    /** Hair border style */
+    HAIR_BORDER = 7,
+    /** Medium dashed border style */
+    MEDIUM_DASHED_BORDER = 8,
+    /** Dash-dot border style */
+    DASH_DOT_BORDER = 9,
+    /** Medium dash-dot border style */
+    MEDIUM_DASH_DOT_BORDER = 10,
+    /** Dash-dot-dot border style */
+    DASH_DOT_DOT_BORDER = 11,
+    /** Medium dash-dot-dot border style */
+    MEDIUM_DASH_DOT_DOT_BORDER = 12,
+    /** Slant dash-dot border style */
+    SLANT_DASH_DOT_BORDER = 13,
   }
 
   enum ChartType {
@@ -68,8 +77,20 @@ declare namespace XLSX {
     RADAR_FILLED_CHART = 22
   }
 
-  type Border = ExcelWriter.Border;
+  class Worksheet {
+    insertChart(row: number, column: number, chart: Chart): void;
+    insertImage(row: number, column: number, image: Uint8Array): void;
+    setColumn(firstColumn: number, lastColumn: number, width: number, format?: Format): void;
+    setRow(row: number, height: number, format?: Format): void;
+    setFooter(footer: string): void;
+    setHeader(header: string): void;
+    writeDatetime(row: number, column: number, date: Date, format?: Format): void;
+    writeNumber(row: number, column: number, number: number, format?: Format): void;
+    writeString(row: number, column: number, string: string, format?: Format): void;
+  }
+
   type Chart = ExcelWriter.Chart;
+  type Format = ExcelWriter.Format;
 }
 
 declare namespace ExcelWriter {
@@ -99,6 +120,30 @@ declare namespace ExcelWriter {
     addSeries(categories: string | null, values: string): void;
     setTitleName(name: string): void;
     setTitleNameFont(font: ChartFont): void;
+  }
+
+  class Format {
+    static NONE_BORDER: XLSX.BorderStyle.NONE_BORDER;
+    static THIN_BORDER: XLSX.BorderStyle.THIN_BORDER;
+    static MEDIUM_BORDER: XLSX.BorderStyle.MEDIUM_BORDER;
+    static DASHED_BORDER: XLSX.BorderStyle.DASHED_BORDER;
+    static DOTTED_BORDER: XLSX.BorderStyle.DOTTED_BORDER;
+    static THICK_BORDER: XLSX.BorderStyle.THICK_BORDER;
+    static DOUBLE_BORDER: XLSX.BorderStyle.DOUBLE_BORDER;
+    static HAIR_BORDER: XLSX.BorderStyle.HAIR_BORDER;
+    static MEDIUM_DASHED_BORDER: XLSX.BorderStyle.MEDIUM_DASHED_BORDER;
+    static DASH_DOT_BORDER: XLSX.BorderStyle.DASH_DOT_BORDER;
+    static MEDIUM_DASH_DOT_BORDER: XLSX.BorderStyle.MEDIUM_DASH_DOT_BORDER;
+    static DASH_DOT_DOT_BORDER: XLSX.BorderStyle.DASH_DOT_DOT_BORDER;
+    static MEDIUM_DASH_DOT_DOT_BORDER: XLSX.BorderStyle.MEDIUM_DASH_DOT_DOT_BORDER;
+    static SLANT_DASH_DOT_BORDER: XLSX.BorderStyle.SLANT_DASH_DOT_BORDER;
+    setBgColor(color: number): void;
+    setFgColor(color: number): void;
+    setBorderColor(color: number): void;
+    setFontColor(color: number): void;
+    setBold(): void;
+    setBorder(style: BorderStyle): void;
+    setNumFormat(format: string): void;
   }
 
   enum Color {
@@ -134,37 +179,6 @@ declare namespace ExcelWriter {
     WHITE_COLOR = 0xffffff,
     /** Yellow */
     YELLOW_COLOR = 0xffff00,
-  }
-
-  enum Border {
-    /** No border */
-    NONE_BORDER,
-    /** Thin border style */
-    THIN_BORDER,
-    /** Medium border style */
-    MEDIUM_BORDER,
-    /** Dashed border style */
-    DASHED_BORDER,
-    /** Dotted border style */
-    DOTTED_BORDER,
-    /** Thick border style */
-    THICK_BORDER,
-    /** Double border style */
-    DOUBLE_BORDER,
-    /** Hair border style */
-    HAIR_BORDER,
-    /** Medium dashed border style */
-    MEDIUM_DASHED_BORDER,
-    /** Dash-dot border style */
-    DASH_DOT_BORDER,
-    /** Medium dash-dot border style */
-    MEDIUM_DASH_DOT_BORDER,
-    /** Dash-dot-dot border style */
-    DASH_DOT_DOT_BORDER,
-    /** Medium dash-dot-dot border style */
-    MEDIUM_DASH_DOT_DOT_BORDER,
-    /** Slant dash-dot border style */
-    SLANT_DASH_DOT_BORDER,
   }
 
   interface ChartFont {
@@ -203,8 +217,8 @@ declare namespace ExcelWriter {
     close(): ArrayBuffer;
   }
 
+  type BorderStyle = XLSX.BorderStyle;
   type ChartType = XLSX.ChartType;
-  type Format = XLSX.Format;
   type Worksheet = XLSX.Worksheet;
 }
 

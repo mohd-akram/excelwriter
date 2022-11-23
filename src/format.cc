@@ -7,36 +7,76 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
   auto func = DefineClass(
       env,
       "Format",
-      {
-          InstanceMethod<&Format::SetBgColor>(
-              "setBgColor",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Format::SetFgColor>(
-              "setFgColor",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Format::SetBorderColor>(
-              "setBorderColor",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Format::SetFontColor>(
-              "setFontColor",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Format::SetBold>(
-              "setBold",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Format::SetBorder>(
-              "setBorder",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Format::SetNumFormat>(
-              "setNumFormat",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-      });
+      {InstanceMethod<&Format::SetBgColor>(
+           "setBgColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetFgColor>(
+           "setFgColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetBorderColor>(
+           "setBorderColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetFontColor>(
+           "setFontColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetBold>("setBold",
+                                        static_cast<napi_property_attributes>(
+                                            napi_writable | napi_configurable)),
+       InstanceMethod<&Format::SetBorder>(
+           "setBorder",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetNumFormat>(
+           "setNumFormat",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+
+       StaticValue("NONE_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_NONE),
+                   napi_default),
+       StaticValue("THIN_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_THIN),
+                   napi_default),
+       StaticValue("MEDIUM_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_MEDIUM),
+                   napi_default),
+       StaticValue("DASHED_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_DASHED),
+                   napi_default),
+       StaticValue("DOTTED_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_DOTTED),
+                   napi_default),
+       StaticValue("THICK_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_THICK),
+                   napi_default),
+       StaticValue("DOUBLE_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_DOUBLE),
+                   napi_default),
+       StaticValue("HAIR_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_HAIR),
+                   napi_default),
+       StaticValue("MEDIUM_DASHED_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_MEDIUM_DASHED),
+                   napi_default),
+       StaticValue("DASH_DOT_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_DASH_DOT),
+                   napi_default),
+       StaticValue("MEDIUM_DASH_DOT_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_MEDIUM_DASH_DOT),
+                   napi_default),
+       StaticValue("DASH_DOT_DOT_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_DASH_DOT_DOT),
+                   napi_default),
+       StaticValue("MEDIUM_DASH_DOT_DOT_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_MEDIUM_DASH_DOT_DOT),
+                   napi_default),
+       StaticValue("SLANT_DASH_DOT_BORDER",
+                   Napi::Number::New(env, LXW_BORDER_SLANT_DASH_DOT),
+                   napi_default)});
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
 
@@ -47,6 +87,7 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
   }
 
   data->Set("FormatConstructor", func);
+  exports.Set("Format", func);
 
   return exports;
 }
