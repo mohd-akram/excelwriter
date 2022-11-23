@@ -1,1 +1,1 @@
-declare type Worksheet = import('excelwriter').Worksheet;
+declare type Worksheet = import("excelwriter").Worksheet;

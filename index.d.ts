@@ -74,19 +74,39 @@ declare namespace XLSX {
     /** Radar chart - with markers. */
     RADAR_WITH_MARKERS_CHART = 21,
     /** Radar chart - filled. */
-    RADAR_FILLED_CHART = 22
+    RADAR_FILLED_CHART = 22,
   }
 
   class Worksheet {
     insertChart(row: number, column: number, chart: Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
-    setColumn(firstColumn: number, lastColumn: number, width: number, format?: Format): void;
+    setColumn(
+      firstColumn: number,
+      lastColumn: number,
+      width: number,
+      format?: Format
+    ): void;
     setRow(row: number, height: number, format?: Format): void;
     setFooter(footer: string): void;
     setHeader(header: string): void;
-    writeDatetime(row: number, column: number, date: Date, format?: Format): void;
-    writeNumber(row: number, column: number, number: number, format?: Format): void;
-    writeString(row: number, column: number, string: string, format?: Format): void;
+    writeDatetime(
+      row: number,
+      column: number,
+      date: Date,
+      format?: Format
+    ): void;
+    writeNumber(
+      row: number,
+      column: number,
+      number: number,
+      format?: Format
+    ): void;
+    writeString(
+      row: number,
+      column: number,
+      string: string,
+      format?: Format
+    ): void;
   }
 
   type Chart = ExcelWriter.Chart;
