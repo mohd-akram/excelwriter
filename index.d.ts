@@ -106,6 +106,25 @@ declare namespace XLSX {
     RADAR_FILLED_CHART = 22,
   }
 
+  enum ScriptStyle {
+    /** Superscript font */
+    SUPERSCRIPT_FONT = 1,
+    /** Subscript font */
+    SUBSCRIPT_FONT = 2,
+  }
+
+  enum UnderlineStyle {
+    NONE_UNDERLINE = 0,
+    /** Single underline */
+    SINGLE_UNDERLINE = 1,
+    /** Double underline */
+    DOUBLE_UNDERLINE = 2,
+    /** Single accounting underline */
+    SINGLE_ACCOUNTING_UNDERLINE = 3,
+    /** Double accounting underline */
+    DOUBLE_ACCOUNTING_UNDERLINE = 4,
+  }
+
   class Worksheet {
     insertChart(row: number, column: number, chart: Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
@@ -208,12 +227,28 @@ declare namespace ExcelWriter {
     static DASH_DOT_DOT_BORDER: XLSX.BorderStyle.DASH_DOT_DOT_BORDER;
     static MEDIUM_DASH_DOT_DOT_BORDER: XLSX.BorderStyle.MEDIUM_DASH_DOT_DOT_BORDER;
     static SLANT_DASH_DOT_BORDER: XLSX.BorderStyle.SLANT_DASH_DOT_BORDER;
+
+    static SUPERSCRIPT_FONT: XLSX.ScriptStyle.SUPERSCRIPT_FONT;
+    static SUBSCRIPT_FONT: XLSX.ScriptStyle.SUBSCRIPT_FONT;
+
+    static NONE_UNDERLINE: XLSX.UnderlineStyle.NONE_UNDERLINE;
+    static SINGLE_UNDERLINE: XLSX.UnderlineStyle.SINGLE_UNDERLINE;
+    static DOUBLE_UNDERLINE: XLSX.UnderlineStyle.DOUBLE_UNDERLINE;
+    static SINGLE_ACCOUNTING_UNDERLINE: XLSX.UnderlineStyle.SINGLE_ACCOUNTING_UNDERLINE;
+    static DOUBLE_ACCOUNTING_UNDERLINE: XLSX.UnderlineStyle.DOUBLE_ACCOUNTING_UNDERLINE;
+
     setAlign(alignment: Alignment): void;
     setBgColor(color: number): void;
     setFgColor(color: number): void;
     setBorderColor(color: number): void;
     setFontColor(color: number): void;
+    setFontName(name: string): void;
+    setFontScript(style: ScriptStyle): void;
+    setFontSize(size: number): void;
+    setFontStrikeout(): void;
     setBold(): void;
+    setItalic(): void;
+    setUnderline(style: UnderlineStyle): void;
     setBorder(style: BorderStyle): void;
     setNumFormat(format: string): void;
   }
@@ -292,6 +327,8 @@ declare namespace ExcelWriter {
   type Alignment = XLSX.Alignment;
   type BorderStyle = XLSX.BorderStyle;
   type ChartType = XLSX.ChartType;
+  type ScriptStyle = XLSX.ScriptStyle;
+  type UnderlineStyle = XLSX.UnderlineStyle;
   type Worksheet = XLSX.Worksheet;
 }
 

@@ -27,9 +27,33 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
            "setFontColor",
            static_cast<napi_property_attributes>(napi_writable |
                                                  napi_configurable)),
+       InstanceMethod<&Format::SetFontName>(
+           "setFontName",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetFontScript>(
+           "setFontScript",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetFontSize>(
+           "setFontSize",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetFontStrikeout>(
+           "setFontStrikeout",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
        InstanceMethod<&Format::SetBold>("setBold",
                                         static_cast<napi_property_attributes>(
                                             napi_writable | napi_configurable)),
+       InstanceMethod<&Format::SetItalic>(
+           "setItalic",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetUnderline>(
+           "setUnderline",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
        InstanceMethod<&Format::SetBorder>(
            "setBorder",
            static_cast<napi_property_attributes>(napi_writable |
@@ -181,9 +205,45 @@ Napi::Value Format::SetFontColor(const Napi::CallbackInfo& info) {
   return env.Undefined();
 }
 
+Napi::Value Format::SetFontName(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_font_name(format, info[0].As<Napi::String>().Utf8Value().c_str());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetFontScript(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_font_script(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetFontSize(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_font_size(format, info[0].As<Napi::Number>());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetFontStrikeout(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_font_strikeout(format);
+  return env.Undefined();
+}
+
 Napi::Value Format::SetBold(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_bold(format);
+  return env.Undefined();
+}
+
+Napi::Value Format::SetItalic(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_italic(format);
+  return env.Undefined();
+}
+
+Napi::Value Format::SetUnderline(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_underline(format, info[0].As<Napi::Number>().Uint32Value());
   return env.Undefined();
 }
 
