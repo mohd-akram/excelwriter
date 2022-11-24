@@ -11,6 +11,22 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
            "setAlign",
            static_cast<napi_property_attributes>(napi_writable |
                                                  napi_configurable)),
+       InstanceMethod<&Format::SetRotation>(
+           "setRotation",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetTextWrap>(
+           "setTextWrap",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetIndent>(
+           "setIndent",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetShrink>(
+           "setShrink",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
        InstanceMethod<&Format::SetBgColor>(
            "setBgColor",
            static_cast<napi_property_attributes>(napi_writable |
@@ -208,6 +224,30 @@ Napi::Value Format::NewInstance(Napi::Env env, lxw_format* format) {
 Napi::Value Format::SetAlign(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_align(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetRotation(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_rotation(format, info[0].As<Napi::Number>().Int32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetTextWrap(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_text_wrap(format);
+  return env.Undefined();
+}
+
+Napi::Value Format::SetIndent(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_indent(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetShrink(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_shrink(format);
   return env.Undefined();
 }
 

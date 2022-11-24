@@ -238,6 +238,10 @@ declare namespace ExcelWriter {
     static DOUBLE_ACCOUNTING_UNDERLINE: XLSX.UnderlineStyle.DOUBLE_ACCOUNTING_UNDERLINE;
 
     setAlign(alignment: Alignment): void;
+    setRotation(angle: number): void;
+    setTextWrap(): void;
+    setIndent(level: number): void;
+    setShrink(): void;
     setBgColor(color: number): void;
     setFgColor(color: number): void;
     setBorderColor(color: number): void;
