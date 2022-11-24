@@ -241,6 +241,10 @@ declare namespace ExcelWriter {
     setBgColor(color: number): void;
     setFgColor(color: number): void;
     setBorderColor(color: number): void;
+    setBottomColor(color: number): void;
+    setTopColor(color: number): void;
+    setLeftColor(color: number): void;
+    setRightColor(color: number): void;
     setFontColor(color: number): void;
     setFontName(name: string): void;
     setFontScript(style: ScriptStyle): void;
@@ -250,6 +254,10 @@ declare namespace ExcelWriter {
     setItalic(): void;
     setUnderline(style: UnderlineStyle): void;
     setBorder(style: BorderStyle): void;
+    setBottom(style: BorderStyle): void;
+    setTop(style: BorderStyle): void;
+    setLeft(style: BorderStyle): void;
+    setRight(style: BorderStyle): void;
     setNumFormat(format: string): void;
   }
 

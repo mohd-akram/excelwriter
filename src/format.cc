@@ -23,6 +23,22 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
            "setBorderColor",
            static_cast<napi_property_attributes>(napi_writable |
                                                  napi_configurable)),
+       InstanceMethod<&Format::SetBottomColor>(
+           "setBottomColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetTopColor>(
+           "setTopColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetLeftColor>(
+           "setLeftColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetRightColor>(
+           "setRightColor",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
        InstanceMethod<&Format::SetFontColor>(
            "setFontColor",
            static_cast<napi_property_attributes>(napi_writable |
@@ -56,6 +72,20 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
                                                  napi_configurable)),
        InstanceMethod<&Format::SetBorder>(
            "setBorder",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetBottom>(
+           "setBottom",
+           static_cast<napi_property_attributes>(napi_writable |
+                                                 napi_configurable)),
+       InstanceMethod<&Format::SetTop>("setTop",
+                                       static_cast<napi_property_attributes>(
+                                           napi_writable | napi_configurable)),
+       InstanceMethod<&Format::SetLeft>("setLeft",
+                                        static_cast<napi_property_attributes>(
+                                            napi_writable | napi_configurable)),
+       InstanceMethod<&Format::SetRight>(
+           "setRight",
            static_cast<napi_property_attributes>(napi_writable |
                                                  napi_configurable)),
        InstanceMethod<&Format::SetNumFormat>(
@@ -199,6 +229,30 @@ Napi::Value Format::SetBorderColor(const Napi::CallbackInfo& info) {
   return env.Undefined();
 }
 
+Napi::Value Format::SetBottomColor(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_bottom_color(format, info[0].As<Napi::Number>());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetTopColor(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_top_color(format, info[0].As<Napi::Number>());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetLeftColor(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_left_color(format, info[0].As<Napi::Number>());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetRightColor(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_right_color(format, info[0].As<Napi::Number>());
+  return env.Undefined();
+}
+
 Napi::Value Format::SetFontColor(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_font_color(format, info[0].As<Napi::Number>());
@@ -250,6 +304,30 @@ Napi::Value Format::SetUnderline(const Napi::CallbackInfo& info) {
 Napi::Value Format::SetBorder(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   format_set_border(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetBottom(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_bottom(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetTop(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_top(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetLeft(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_left(format, info[0].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Format::SetRight(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  format_set_right(format, info[0].As<Napi::Number>().Uint32Value());
   return env.Undefined();
 }
 
