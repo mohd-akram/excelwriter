@@ -38,8 +38,16 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
               "setHeader",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Worksheet::WriteBoolean>(
+              "writeBoolean",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
           InstanceMethod<&Worksheet::WriteDatetime>(
               "writeDatetime",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
+          InstanceMethod<&Worksheet::WriteFormula>(
+              "writeFormula",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
           InstanceMethod<&Worksheet::WriteNumber>(
@@ -48,6 +56,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                                                     napi_configurable)),
           InstanceMethod<&Worksheet::WriteString>(
               "writeString",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
+          InstanceMethod<&Worksheet::WriteUrl>(
+              "writeUrl",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
       });
@@ -142,6 +154,16 @@ Napi::Value Worksheet::SetHeader(const Napi::CallbackInfo& info) {
   return env.Undefined();
 }
 
+Napi::Value Worksheet::WriteBoolean(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_write_boolean(worksheet,
+                          info[0].As<Napi::Number>(),
+                          info[1].As<Napi::Number>().Uint32Value(),
+                          info[2].As<Napi::Boolean>(),
+                          Format::Get(info[3]));
+  return env.Undefined();
+}
+
 Napi::Value Worksheet::WriteDatetime(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   auto date = info[2].As<Napi::Object>();
@@ -156,6 +178,16 @@ Napi::Value Worksheet::WriteDatetime(const Napi::CallbackInfo& info) {
                            info[1].As<Napi::Number>().Uint32Value(),
                            info[2].As<Napi::Date>() / 1000 - offset,
                            Format::Get(info[3]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::WriteFormula(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_write_formula(worksheet,
+                          info[0].As<Napi::Number>(),
+                          info[1].As<Napi::Number>().Uint32Value(),
+                          info[2].As<Napi::String>().Utf8Value().c_str(),
+                          Format::Get(info[3]));
   return env.Undefined();
 }
 
@@ -176,5 +208,15 @@ Napi::Value Worksheet::WriteString(const Napi::CallbackInfo& info) {
                          info[1].As<Napi::Number>().Uint32Value(),
                          info[2].As<Napi::String>().Utf8Value().c_str(),
                          Format::Get(info[3]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::WriteUrl(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_write_url(worksheet,
+                      info[0].As<Napi::Number>(),
+                      info[1].As<Napi::Number>().Uint32Value(),
+                      info[2].As<Napi::String>().Utf8Value().c_str(),
+                      Format::Get(info[3]));
   return env.Undefined();
 }
