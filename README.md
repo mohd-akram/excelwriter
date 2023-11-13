@@ -52,3 +52,42 @@ main();
 ## Documentation
 
 See the examples directory.
+
+## Building
+
+To build the excelwriter package, first clone this repository then navigate to its root directory.
+
+```
+git clone https://github.com/mohd-akram/excelwriter
+cd excelwriter
+```
+
+Clone the [libxlsxwriter](https://github.com/jmcnamara/libxlsxwriter) git submodule dependency.
+
+```
+git submodule update --init --recursive
+```
+
+Ensure that [node-gyp](https://github.com/nodejs/node-gyp) is globally installed.
+
+```
+npm install -g node-gyp
+```
+
+Install JavaScript dependencies. This will also initially build the excelwriter package.
+
+```
+npm install
+```
+
+To rebuild the package after making changes, run:
+
+```
+node-gyp rebuild
+```
+
+Run an example script to test, like so:
+
+```
+(cd examples && node demo.js)
+```
