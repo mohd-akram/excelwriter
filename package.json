@@ -32,6 +32,6 @@
   },
   "homepage": "https://github.com/mohd-akram/excelwriter#readme",
   "dependencies": {
-    "node-addon-api": "^5.0.0"
+    "node-addon-api": "^7.0.0"
   }
 }

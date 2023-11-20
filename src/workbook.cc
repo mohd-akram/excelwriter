@@ -38,7 +38,7 @@ Napi::Object Workbook::Init(Napi::Env env, Napi::Object exports) {
 Workbook::Workbook(const Napi::CallbackInfo& info)
     : Napi::ObjectWrap<Workbook>(info) {
   lxw_workbook_options options = {};
-  options.output_buffer = &output_buffer;
+  options.output_buffer = const_cast<const char**>(&output_buffer);
   options.output_buffer_size = &output_buffer_size;
   workbook = workbook_new_opt(NULL, &options);
   default_url_format = Napi::Persistent(
