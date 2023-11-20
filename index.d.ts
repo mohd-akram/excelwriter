@@ -157,6 +157,12 @@ declare namespace XLSX {
       date: Date,
       format?: Format
     ): void;
+    writeFormula(
+      row: number,
+      column: number,
+      formula: string,
+      format?: Format
+    ): void;
     writeNumber(
       row: number,
       column: number,
