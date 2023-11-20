@@ -237,7 +237,7 @@ lxw_format* Format::Get(Napi::Value value) {
              : Format::Unwrap(value.As<Napi::Object>())->format;
 }
 
-Napi::Value Format::NewInstance(Napi::Env env, lxw_format* format) {
+Napi::Value Format::New(Napi::Env env, lxw_format* format) {
   return env.GetInstanceData<Napi::ObjectReference>()
       ->Get("FormatConstructor")
       .As<Napi::Function>()

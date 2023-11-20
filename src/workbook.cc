@@ -42,7 +42,7 @@ Workbook::Workbook(const Napi::CallbackInfo& info)
   options.output_buffer_size = &output_buffer_size;
   workbook = workbook_new_opt(NULL, &options);
   default_url_format = Napi::Persistent(
-      Format::NewInstance(info.Env(), workbook_get_default_url_format(workbook))
+      Format::New(info.Env(), workbook_get_default_url_format(workbook))
           .As<Napi::Object>());
 }
 
@@ -52,20 +52,20 @@ Workbook::~Workbook() {
 
 Napi::Value Workbook::AddChart(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  return Chart::NewInstance(
+  return Chart::New(
       env,
       workbook_add_chart(workbook, info[0].As<Napi::Number>().Uint32Value()));
 }
 
 Napi::Value Workbook::AddFormat(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  return Format::NewInstance(env, workbook_add_format(workbook));
+  return Format::New(env, workbook_add_format(workbook));
 }
 
 Napi::Value Workbook::AddWorksheet(const Napi::CallbackInfo& info) {
   auto name = info[0].As<Napi::String>();
   auto env = info.Env();
-  return Worksheet::NewInstance(
+  return Worksheet::New(
       env, workbook_add_worksheet(workbook, name.Utf8Value().c_str()));
 }
 

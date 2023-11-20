@@ -4,7 +4,7 @@
 class Chart : public Napi::ObjectWrap<Chart> {
  public:
   static Napi::Object Init(Napi::Env env, Napi::Object exports);
-  static Napi::Value NewInstance(Napi::Env env, lxw_chart* chart);
+  static Napi::Value New(Napi::Env env, lxw_chart* chart);
   static lxw_chart* Get(Napi::Value value);
   Chart(const Napi::CallbackInfo& info);
 

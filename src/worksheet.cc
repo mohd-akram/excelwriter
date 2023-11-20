@@ -82,7 +82,7 @@ Worksheet::Worksheet(const Napi::CallbackInfo& info)
   worksheet = info[0].As<Napi::External<lxw_worksheet>>().Data();
 }
 
-Napi::Value Worksheet::NewInstance(Napi::Env env, lxw_worksheet* worksheet) {
+Napi::Value Worksheet::New(Napi::Env env, lxw_worksheet* worksheet) {
   return env.GetInstanceData<Napi::ObjectReference>()
       ->Get("WorksheetConstructor")
       .As<Napi::Function>()

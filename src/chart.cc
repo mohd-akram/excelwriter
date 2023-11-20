@@ -108,7 +108,7 @@ lxw_chart* Chart::Get(Napi::Value value) {
   return Chart::Unwrap(value.As<Napi::Object>())->chart;
 }
 
-Napi::Value Chart::NewInstance(Napi::Env env, lxw_chart* chart) {
+Napi::Value Chart::New(Napi::Env env, lxw_chart* chart) {
   return env.GetInstanceData<Napi::ObjectReference>()
       ->Get("ChartConstructor")
       .As<Napi::Function>()

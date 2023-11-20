@@ -4,7 +4,7 @@
 class Worksheet : public Napi::ObjectWrap<Worksheet> {
  public:
   static Napi::Object Init(Napi::Env env, Napi::Object exports);
-  static Napi::Value NewInstance(Napi::Env env, lxw_worksheet* worksheet);
+  static Napi::Value New(Napi::Env env, lxw_worksheet* worksheet);
   Worksheet(const Napi::CallbackInfo& info);
 
  private:
