@@ -187,6 +187,29 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
                    napi_default),
        StaticValue("SLANT_DASH_DOT_BORDER",
                    Napi::Number::New(env, LXW_BORDER_SLANT_DASH_DOT),
+                   napi_default),
+
+       StaticValue("SUPERSCRIPT_FONT",
+                   Napi::Number::New(env, LXW_FONT_SUPERSCRIPT),
+                   napi_default),
+       StaticValue("SUBSCRIPT_FONT",
+                   Napi::Number::New(env, LXW_FONT_SUBSCRIPT),
+                   napi_default),
+
+       StaticValue("NONE_UNDERLINE",
+                   Napi::Number::New(env, LXW_UNDERLINE_NONE),
+                   napi_default),
+       StaticValue("SINGLE_UNDERLINE",
+                   Napi::Number::New(env, LXW_UNDERLINE_SINGLE),
+                   napi_default),
+       StaticValue("DOUBLE_UNDERLINE",
+                   Napi::Number::New(env, LXW_UNDERLINE_DOUBLE),
+                   napi_default),
+       StaticValue("SINGLE_ACCOUNTING_UNDERLINE",
+                   Napi::Number::New(env, LXW_UNDERLINE_SINGLE_ACCOUNTING),
+                   napi_default),
+       StaticValue("DOUBLE_ACCOUNTING_UNDERLINE",
+                   Napi::Number::New(env, LXW_UNDERLINE_DOUBLE_ACCOUNTING),
                    napi_default)});
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
