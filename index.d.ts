@@ -145,6 +145,12 @@ declare namespace XLSX {
     setRow(row: number, height: number, format?: Format): void;
     setFooter(footer: string): void;
     setHeader(header: string): void;
+    writeBoolean(
+      row: number,
+      column: number,
+      boolean: boolean,
+      format?: Format
+    ): void;
     writeDatetime(
       row: number,
       column: number,
