@@ -23,6 +23,9 @@ Napi::Object Workbook::Init(Napi::Env env, Napi::Object exports) {
               "addWorksheet",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceAccessor<&Workbook::GetDefaultURLFormat>(
+              "defaultURLFormat",
+              static_cast<napi_property_attributes>(napi_configurable)),
           InstanceMethod<&Workbook::Close>(
               "close",
               static_cast<napi_property_attributes>(napi_writable |
@@ -38,6 +41,9 @@ Workbook::Workbook(const Napi::CallbackInfo& info)
   options.output_buffer = &output_buffer;
   options.output_buffer_size = &output_buffer_size;
   workbook = workbook_new_opt(NULL, &options);
+  default_url_format = Napi::Persistent(
+      Format::NewInstance(info.Env(), workbook_get_default_url_format(workbook))
+          .As<Napi::Object>());
 }
 
 Workbook::~Workbook() {
@@ -61,6 +67,10 @@ Napi::Value Workbook::AddWorksheet(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   return Worksheet::NewInstance(
       env, workbook_add_worksheet(workbook, name.Utf8Value().c_str()));
+}
+
+Napi::Value Workbook::GetDefaultURLFormat(const Napi::CallbackInfo& info) {
+  return default_url_format.Value();
 }
 
 Napi::Value Workbook::Close(const Napi::CallbackInfo& info) {

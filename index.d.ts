@@ -175,6 +175,7 @@ declare namespace XLSX {
       string: string,
       format?: Format
     ): void;
+    writeURL(row: number, column: number, url: string, format?: Format): void;
   }
 
   type Chart = ExcelWriter.Chart;
@@ -346,6 +347,8 @@ declare namespace ExcelWriter {
     addFormat(): Format;
     addWorksheet(name: string): Worksheet;
     close(): ArrayBuffer;
+
+    readonly defaultURLFormat: Format;
   }
 
   type Alignment = XLSX.Alignment;

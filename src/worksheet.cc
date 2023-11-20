@@ -58,6 +58,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
               "writeString",
               static_cast<napi_property_attributes>(napi_writable |
                                                     napi_configurable)),
+          InstanceMethod<&Worksheet::WriteURL>(
+              "writeURL",
+              static_cast<napi_property_attributes>(napi_writable |
+                                                    napi_configurable)),
       });
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
@@ -204,5 +208,15 @@ Napi::Value Worksheet::WriteString(const Napi::CallbackInfo& info) {
                          info[1].As<Napi::Number>().Uint32Value(),
                          info[2].As<Napi::String>().Utf8Value().c_str(),
                          Format::Get(info[3]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::WriteURL(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_write_url(worksheet,
+                      info[0].As<Napi::Number>(),
+                      info[1].As<Napi::Number>().Uint32Value(),
+                      info[2].As<Napi::String>().Utf8Value().c_str(),
+                      Format::Get(info[3]));
   return env.Undefined();
 }
