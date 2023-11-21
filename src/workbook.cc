@@ -11,25 +11,14 @@ Napi::Object Workbook::Init(Napi::Env env, Napi::Object exports) {
       env,
       "Workbook",
       {
-          InstanceMethod<&Workbook::AddChart>(
-              "addChart",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Workbook::AddFormat>(
-              "addFormat",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Workbook::AddWorksheet>(
-              "addWorksheet",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceAccessor<&Workbook::GetDefaultURLFormat>(
-              "defaultURLFormat",
-              static_cast<napi_property_attributes>(napi_configurable)),
-          InstanceMethod<&Workbook::Close>(
-              "close",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
+          InstanceMethod<&Workbook::AddChart>("addChart", napi_default_method),
+          InstanceMethod<&Workbook::AddFormat>("addFormat",
+                                               napi_default_method),
+          InstanceMethod<&Workbook::AddWorksheet>("addWorksheet",
+                                                  napi_default_method),
+          InstanceAccessor<&Workbook::GetDefaultURLFormat>("defaultURLFormat",
+                                                           napi_configurable),
+          InstanceMethod<&Workbook::Close>("close", napi_default_method),
       });
   exports["Workbook"] = func;
   return exports;

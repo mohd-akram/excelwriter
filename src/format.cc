@@ -7,210 +7,147 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
   auto func = DefineClass(
       env,
       "Format",
-      {InstanceMethod<&Format::SetAlign>(
-           "setAlign",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetRotation>(
-           "setRotation",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetTextWrap>(
-           "setTextWrap",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetIndent>(
-           "setIndent",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetShrink>(
-           "setShrink",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetBgColor>(
-           "setBgColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetFgColor>(
-           "setFgColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetBorderColor>(
-           "setBorderColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetBottomColor>(
-           "setBottomColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetTopColor>(
-           "setTopColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetLeftColor>(
-           "setLeftColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetRightColor>(
-           "setRightColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetFontColor>(
-           "setFontColor",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetFontName>(
-           "setFontName",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetFontScript>(
-           "setFontScript",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetFontSize>(
-           "setFontSize",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetFontStrikeout>(
-           "setFontStrikeout",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetBold>("setBold",
-                                        static_cast<napi_property_attributes>(
-                                            napi_writable | napi_configurable)),
-       InstanceMethod<&Format::SetItalic>(
-           "setItalic",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetUnderline>(
-           "setUnderline",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetBorder>(
-           "setBorder",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetBottom>(
-           "setBottom",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetTop>("setTop",
-                                       static_cast<napi_property_attributes>(
-                                           napi_writable | napi_configurable)),
-       InstanceMethod<&Format::SetLeft>("setLeft",
-                                        static_cast<napi_property_attributes>(
-                                            napi_writable | napi_configurable)),
-       InstanceMethod<&Format::SetRight>(
-           "setRight",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
-       InstanceMethod<&Format::SetNumFormat>(
-           "setNumFormat",
-           static_cast<napi_property_attributes>(napi_writable |
-                                                 napi_configurable)),
+      {InstanceMethod<&Format::SetAlign>("setAlign", napi_default_method),
+       InstanceMethod<&Format::SetRotation>("setRotation", napi_default_method),
+       InstanceMethod<&Format::SetTextWrap>("setTextWrap", napi_default_method),
+       InstanceMethod<&Format::SetIndent>("setIndent", napi_default_method),
+       InstanceMethod<&Format::SetShrink>("setShrink", napi_default_method),
+       InstanceMethod<&Format::SetBgColor>("setBgColor", napi_default_method),
+       InstanceMethod<&Format::SetFgColor>("setFgColor", napi_default_method),
+       InstanceMethod<&Format::SetBorderColor>("setBorderColor",
+                                               napi_default_method),
+       InstanceMethod<&Format::SetBottomColor>("setBottomColor",
+                                               napi_default_method),
+       InstanceMethod<&Format::SetTopColor>("setTopColor", napi_default_method),
+       InstanceMethod<&Format::SetLeftColor>("setLeftColor",
+                                             napi_default_method),
+       InstanceMethod<&Format::SetRightColor>("setRightColor",
+                                              napi_default_method),
+       InstanceMethod<&Format::SetFontColor>("setFontColor",
+                                             napi_default_method),
+       InstanceMethod<&Format::SetFontName>("setFontName", napi_default_method),
+       InstanceMethod<&Format::SetFontScript>("setFontScript",
+                                              napi_default_method),
+       InstanceMethod<&Format::SetFontSize>("setFontSize", napi_default_method),
+       InstanceMethod<&Format::SetFontStrikeout>("setFontStrikeout",
+                                                 napi_default_method),
+       InstanceMethod<&Format::SetBold>("setBold", napi_default_method),
+       InstanceMethod<&Format::SetItalic>("setItalic", napi_default_method),
+       InstanceMethod<&Format::SetUnderline>("setUnderline",
+                                             napi_default_method),
+       InstanceMethod<&Format::SetBorder>("setBorder", napi_default_method),
+       InstanceMethod<&Format::SetBottom>("setBottom", napi_default_method),
+       InstanceMethod<&Format::SetTop>("setTop", napi_default_method),
+       InstanceMethod<&Format::SetLeft>("setLeft", napi_default_method),
+       InstanceMethod<&Format::SetRight>("setRight", napi_default_method),
+       InstanceMethod<&Format::SetNumFormat>("setNumFormat",
+                                             napi_default_method),
 
-       StaticValue(
-           "NONE_ALIGN", Napi::Number::New(env, LXW_ALIGN_NONE), napi_default),
-       StaticValue(
-           "LEFT_ALIGN", Napi::Number::New(env, LXW_ALIGN_LEFT), napi_default),
+       StaticValue("NONE_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_NONE),
+                   napi_enumerable),
+       StaticValue("LEFT_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_LEFT),
+                   napi_enumerable),
        StaticValue("CENTER_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_CENTER),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("RIGHT_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_RIGHT),
-                   napi_default),
-       StaticValue(
-           "FILL_ALIGN", Napi::Number::New(env, LXW_ALIGN_FILL), napi_default),
+                   napi_enumerable),
+       StaticValue("FILL_ALIGN",
+                   Napi::Number::New(env, LXW_ALIGN_FILL),
+                   napi_enumerable),
        StaticValue("JUSTIFY_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_JUSTIFY),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("CENTER_ACROSS_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_CENTER_ACROSS),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DISTRIBUTED_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_DISTRIBUTED),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("VERTICAL_TOP_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_VERTICAL_TOP),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("VERTICAL_BOTTOM_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_VERTICAL_BOTTOM),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("VERTICAL_CENTER_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_VERTICAL_CENTER),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("VERTICAL_JUSTIFY_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_VERTICAL_JUSTIFY),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("VERTICAL_DISTRIBUTED_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_VERTICAL_DISTRIBUTED),
-                   napi_default),
+                   napi_enumerable),
 
        StaticValue("NONE_BORDER",
                    Napi::Number::New(env, LXW_BORDER_NONE),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("THIN_BORDER",
                    Napi::Number::New(env, LXW_BORDER_THIN),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("MEDIUM_BORDER",
                    Napi::Number::New(env, LXW_BORDER_MEDIUM),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DASHED_BORDER",
                    Napi::Number::New(env, LXW_BORDER_DASHED),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DOTTED_BORDER",
                    Napi::Number::New(env, LXW_BORDER_DOTTED),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("THICK_BORDER",
                    Napi::Number::New(env, LXW_BORDER_THICK),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DOUBLE_BORDER",
                    Napi::Number::New(env, LXW_BORDER_DOUBLE),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("HAIR_BORDER",
                    Napi::Number::New(env, LXW_BORDER_HAIR),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("MEDIUM_DASHED_BORDER",
                    Napi::Number::New(env, LXW_BORDER_MEDIUM_DASHED),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DASH_DOT_BORDER",
                    Napi::Number::New(env, LXW_BORDER_DASH_DOT),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("MEDIUM_DASH_DOT_BORDER",
                    Napi::Number::New(env, LXW_BORDER_MEDIUM_DASH_DOT),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DASH_DOT_DOT_BORDER",
                    Napi::Number::New(env, LXW_BORDER_DASH_DOT_DOT),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("MEDIUM_DASH_DOT_DOT_BORDER",
                    Napi::Number::New(env, LXW_BORDER_MEDIUM_DASH_DOT_DOT),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("SLANT_DASH_DOT_BORDER",
                    Napi::Number::New(env, LXW_BORDER_SLANT_DASH_DOT),
-                   napi_default),
+                   napi_enumerable),
 
        StaticValue("SUPERSCRIPT_FONT",
                    Napi::Number::New(env, LXW_FONT_SUPERSCRIPT),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("SUBSCRIPT_FONT",
                    Napi::Number::New(env, LXW_FONT_SUBSCRIPT),
-                   napi_default),
+                   napi_enumerable),
 
        StaticValue("NONE_UNDERLINE",
                    Napi::Number::New(env, LXW_UNDERLINE_NONE),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("SINGLE_UNDERLINE",
                    Napi::Number::New(env, LXW_UNDERLINE_SINGLE),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DOUBLE_UNDERLINE",
                    Napi::Number::New(env, LXW_UNDERLINE_DOUBLE),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("SINGLE_ACCOUNTING_UNDERLINE",
                    Napi::Number::New(env, LXW_UNDERLINE_SINGLE_ACCOUNTING),
-                   napi_default),
+                   napi_enumerable),
        StaticValue("DOUBLE_ACCOUNTING_UNDERLINE",
                    Napi::Number::New(env, LXW_UNDERLINE_DOUBLE_ACCOUNTING),
-                   napi_default)});
+                   napi_enumerable)});
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
 

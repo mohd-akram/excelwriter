@@ -10,58 +10,30 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
       env,
       "Worksheet",
       {
-          InstanceMethod<&Worksheet::InsertChart>(
-              "insertChart",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::InsertImage>(
-              "insertImage",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::MergeRange>(
-              "mergeRange",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::SetColumn>(
-              "setColumn",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::SetRow>(
-              "setRow",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::SetFooter>(
-              "setFooter",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::SetHeader>(
-              "setHeader",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::WriteBoolean>(
-              "writeBoolean",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::WriteDatetime>(
-              "writeDatetime",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::WriteFormula>(
-              "writeFormula",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::WriteNumber>(
-              "writeNumber",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::WriteString>(
-              "writeString",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
-          InstanceMethod<&Worksheet::WriteURL>(
-              "writeURL",
-              static_cast<napi_property_attributes>(napi_writable |
-                                                    napi_configurable)),
+          InstanceMethod<&Worksheet::InsertChart>("insertChart",
+                                                  napi_default_method),
+          InstanceMethod<&Worksheet::InsertImage>("insertImage",
+                                                  napi_default_method),
+          InstanceMethod<&Worksheet::MergeRange>("mergeRange",
+                                                 napi_default_method),
+          InstanceMethod<&Worksheet::SetColumn>("setColumn",
+                                                napi_default_method),
+          InstanceMethod<&Worksheet::SetRow>("setRow", napi_default_method),
+          InstanceMethod<&Worksheet::SetFooter>("setFooter",
+                                                napi_default_method),
+          InstanceMethod<&Worksheet::SetHeader>("setHeader",
+                                                napi_default_method),
+          InstanceMethod<&Worksheet::WriteBoolean>("writeBoolean",
+                                                   napi_default_method),
+          InstanceMethod<&Worksheet::WriteDatetime>("writeDatetime",
+                                                    napi_default_method),
+          InstanceMethod<&Worksheet::WriteFormula>("writeFormula",
+                                                   napi_default_method),
+          InstanceMethod<&Worksheet::WriteNumber>("writeNumber",
+                                                  napi_default_method),
+          InstanceMethod<&Worksheet::WriteString>("writeString",
+                                                  napi_default_method),
+          InstanceMethod<&Worksheet::WriteURL>("writeURL", napi_default_method),
       });
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
