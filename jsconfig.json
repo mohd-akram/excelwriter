@@ -2,8 +2,6 @@
   "compilerOptions": {
     "checkJs": true,
     "strict": true,
-    "target": "ES2022",
-    "moduleResolution": "node",
-    "skipLibCheck": false
+    "module": "Node16"
   }
 }

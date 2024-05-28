@@ -15,7 +15,9 @@
     "src/libxlsxwriter/third_party/minizip/*.{c,h}",
     "src/libxlsxwriter/third_party/md5/*.{c,h}"
   ],
-  "scripts": {},
+  "scripts": {
+    "typecheck": "tsc -p jsconfig.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mohd-akram/excelwriter.git"
@@ -33,5 +35,9 @@
   "homepage": "https://github.com/mohd-akram/excelwriter#readme",
   "dependencies": {
     "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.4.5"
   }
 }

@@ -1,3 +1,4 @@
+/** @type {import('.')} */ // @ts-expect-error
 const excelwriter = require("./build/Release/xlsxwriter");
 
 module.exports.Chart = excelwriter.Chart;

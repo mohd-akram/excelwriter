@@ -23,33 +23,29 @@ function writeWorksheetData(worksheet) {
 }
 
 /* Create a worksheet with a chart. */
-async function main() {
-  const workbook = new Workbook();
-  const worksheet = workbook.addWorksheet("Sheet1");
+const workbook = new Workbook();
+const worksheet = workbook.addWorksheet("Sheet1");
 
-  /* Write some data for the chart. */
-  writeWorksheetData(worksheet);
+/* Write some data for the chart. */
+writeWorksheetData(worksheet);
 
-  /* Create a chart object. */
-  const chart = workbook.addChart(Chart.COLUMN_CHART);
+/* Create a chart object. */
+const chart = workbook.addChart(Chart.COLUMN_CHART);
 
-  /* Configure the chart. In simplest case we just add some value data
-   * series. The null categories will default to 1 to 5 like in Excel.
-   */
-  chart.addSeries(null, "Sheet1!$A$1:$A$5");
-  chart.addSeries(null, "Sheet1!$B$1:$B$5");
-  chart.addSeries(null, "Sheet1!$C$1:$C$5");
+/* Configure the chart. In simplest case we just add some value data
+ * series. The null categories will default to 1 to 5 like in Excel.
+ */
+chart.addSeries(null, "Sheet1!$A$1:$A$5");
+chart.addSeries(null, "Sheet1!$B$1:$B$5");
+chart.addSeries(null, "Sheet1!$C$1:$C$5");
 
-  const font = { bold: false, color: Color.BLUE_COLOR };
+const font = { bold: false, color: Color.BLUE_COLOR };
 
-  chart.setTitleName("Year End Results");
-  chart.setTitleNameFont(font);
+chart.setTitleName("Year End Results");
+chart.setTitleNameFont(font);
 
-  /* Insert the chart into the worksheet. */
-  worksheet.insertChart(6, 1, chart);
+/* Insert the chart into the worksheet. */
+worksheet.insertChart(6, 1, chart);
 
-  const data = workbook.close();
-  await fs.writeFile("chart.xlsx", Buffer.from(data));
-}
-
-main();
+const data = workbook.close();
+await fs.writeFile("chart.xlsx", Buffer.from(data));
