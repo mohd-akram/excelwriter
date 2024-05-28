@@ -15,6 +15,7 @@ class Worksheet : public Napi::ObjectWrap<Worksheet> {
   Napi::Value SetRow(const Napi::CallbackInfo& info);
   Napi::Value SetFooter(const Napi::CallbackInfo& info);
   Napi::Value SetHeader(const Napi::CallbackInfo& info);
+  Napi::Value SetSelection(const Napi::CallbackInfo& info);
   Napi::Value WriteBoolean(const Napi::CallbackInfo& info);
   Napi::Value WriteDatetime(const Napi::CallbackInfo& info);
   Napi::Value WriteFormula(const Napi::CallbackInfo& info);

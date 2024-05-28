@@ -23,6 +23,8 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                                                 napi_default_method),
           InstanceMethod<&Worksheet::SetHeader>("setHeader",
                                                 napi_default_method),
+          InstanceMethod<&Worksheet::SetSelection>("setSelection",
+                                                   napi_default_method),
           InstanceMethod<&Worksheet::WriteBoolean>("writeBoolean",
                                                    napi_default_method),
           InstanceMethod<&Worksheet::WriteDatetime>("writeDatetime",
@@ -123,6 +125,16 @@ Napi::Value Worksheet::SetHeader(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   worksheet_set_header(worksheet,
                        info[0].As<Napi::String>().Utf8Value().c_str());
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::SetSelection(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_set_selection(worksheet,
+                          info[0].As<Napi::Number>(),
+                          info[1].As<Napi::Number>().Uint32Value(),
+                          info[2].As<Napi::Number>(),
+                          info[3].As<Napi::Number>().Uint32Value());
   return env.Undefined();
 }
 

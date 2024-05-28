@@ -145,6 +145,12 @@ declare namespace XLSX {
     setRow(row: number, height: number, format?: Format): void;
     setFooter(footer: string): void;
     setHeader(header: string): void;
+    setSelection(
+      firstRow: number,
+      firstColumn: number,
+      lastRow: number,
+      lastColumn: number
+    ): void;
     writeBoolean(
       row: number,
       column: number,
