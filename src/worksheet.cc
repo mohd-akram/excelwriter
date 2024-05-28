@@ -10,6 +10,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
       env,
       "Worksheet",
       {
+          InstanceMethod<&Worksheet::FreezePanes>("freezePanes",
+                                                  napi_default_method),
+          InstanceMethod<&Worksheet::SplitPanes>("splitPanes",
+                                                 napi_default_method),
           InstanceMethod<&Worksheet::InsertChart>("insertChart",
                                                   napi_default_method),
           InstanceMethod<&Worksheet::InsertImage>("insertImage",
@@ -61,6 +65,21 @@ Napi::Value Worksheet::New(Napi::Env env, lxw_worksheet* worksheet) {
       ->Get("WorksheetConstructor")
       .As<Napi::Function>()
       .New({Napi::External<lxw_worksheet>::New(env, worksheet)});
+}
+
+Napi::Value Worksheet::FreezePanes(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_freeze_panes(worksheet,
+                         info[0].As<Napi::Number>(),
+                         info[1].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::SplitPanes(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_split_panes(
+      worksheet, info[0].As<Napi::Number>(), info[1].As<Napi::Number>());
+  return env.Undefined();
 }
 
 Napi::Value Worksheet::InsertChart(const Napi::CallbackInfo& info) {

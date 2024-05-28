@@ -126,6 +126,8 @@ declare namespace XLSX {
   }
 
   class Worksheet {
+    freezePanes(row: number, column: number): void;
+    splitPanes(vertical: number, horizontal: number): void;
     insertChart(row: number, column: number, chart: Chart): void;
     insertImage(row: number, column: number, image: Uint8Array): void;
     mergeRange(
