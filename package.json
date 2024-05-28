@@ -16,7 +16,8 @@
     "src/libxlsxwriter/third_party/md5/*.{c,h}"
   ],
   "scripts": {
-    "typecheck": "tsc -p jsconfig.json"
+    "typecheck": "tsc -p jsconfig.json",
+    "test": "cd examples && node --test *.js"
   },
   "repository": {
     "type": "git",
