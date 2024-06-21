@@ -3,126 +3,126 @@ declare namespace XLSX {
     /** No alignment. Cell will use Excel's default for the data type */
     NONE_ALIGN = 0,
     /** Left horizontal alignment */
-    LEFT_ALIGN = 1,
+    LEFT_ALIGN,
     /** Center horizontal alignment */
-    CENTER_ALIGN = 2,
+    CENTER_ALIGN,
     /** Right horizontal alignment */
-    RIGHT_ALIGN = 3,
+    RIGHT_ALIGN,
     /** Cell fill horizontal alignment */
-    FILL_ALIGN = 4,
+    FILL_ALIGN,
     /** Justify horizontal alignment */
-    JUSTIFY_ALIGN = 5,
+    JUSTIFY_ALIGN,
     /** Center Across horizontal alignment */
-    CENTER_ACROSS_ALIGN = 6,
+    CENTER_ACROSS_ALIGN,
     /** Left horizontal alignment */
-    DISTRIBUTED_ALIGN = 7,
+    DISTRIBUTED_ALIGN,
     /** Top vertical alignment */
-    VERTICAL_TOP_ALIGN = 8,
+    VERTICAL_TOP_ALIGN,
     /** Bottom vertical alignment */
-    VERTICAL_BOTTOM_ALIGN = 9,
+    VERTICAL_BOTTOM_ALIGN,
     /** Center vertical alignment */
-    VERTICAL_CENTER_ALIGN = 10,
+    VERTICAL_CENTER_ALIGN,
     /** Justify vertical alignment */
-    VERTICAL_JUSTIFY_ALIGN = 11,
+    VERTICAL_JUSTIFY_ALIGN,
     /** Distributed vertical alignment */
-    VERTICAL_DISTRIBUTED_ALIGN = 12,
+    VERTICAL_DISTRIBUTED_ALIGN,
   }
 
   enum BorderStyle {
     /** No border */
     NONE_BORDER = 0,
     /** Thin border style */
-    THIN_BORDER = 1,
+    THIN_BORDER,
     /** Medium border style */
-    MEDIUM_BORDER = 2,
+    MEDIUM_BORDER,
     /** Dashed border style */
-    DASHED_BORDER = 3,
+    DASHED_BORDER,
     /** Dotted border style */
-    DOTTED_BORDER = 4,
+    DOTTED_BORDER,
     /** Thick border style */
-    THICK_BORDER = 5,
+    THICK_BORDER,
     /** Double border style */
-    DOUBLE_BORDER = 6,
+    DOUBLE_BORDER,
     /** Hair border style */
-    HAIR_BORDER = 7,
+    HAIR_BORDER,
     /** Medium dashed border style */
-    MEDIUM_DASHED_BORDER = 8,
+    MEDIUM_DASHED_BORDER,
     /** Dash-dot border style */
-    DASH_DOT_BORDER = 9,
+    DASH_DOT_BORDER,
     /** Medium dash-dot border style */
-    MEDIUM_DASH_DOT_BORDER = 10,
+    MEDIUM_DASH_DOT_BORDER,
     /** Dash-dot-dot border style */
-    DASH_DOT_DOT_BORDER = 11,
+    DASH_DOT_DOT_BORDER,
     /** Medium dash-dot-dot border style */
-    MEDIUM_DASH_DOT_DOT_BORDER = 12,
+    MEDIUM_DASH_DOT_DOT_BORDER,
     /** Slant dash-dot border style */
-    SLANT_DASH_DOT_BORDER = 13,
+    SLANT_DASH_DOT_BORDER,
   }
 
   enum ChartType {
     /** Area chart. */
     AREA_CHART = 1,
     /** Area chart - stacked. */
-    AREA_STACKED_CHART = 2,
+    AREA_STACKED_CHART,
     /** Area chart - percentage stacked. */
-    AREA_STACKED_PERCENT_CHART = 3,
+    AREA_STACKED_PERCENT_CHART,
     /** Bar chart. */
-    BAR_CHART = 4,
+    BAR_CHART,
     /** Bar chart - stacked. */
-    BAR_STACKED_CHART = 5,
+    BAR_STACKED_CHART,
     /** Bar chart - percentage stacked. */
-    BAR_STACKED_PERCENT_CHART = 6,
+    BAR_STACKED_PERCENT_CHART,
     /** Column chart. */
-    COLUMN_CHART = 7,
+    COLUMN_CHART,
     /** Column chart - stacked. */
-    COLUMN_STACKED_CHART = 8,
+    COLUMN_STACKED_CHART,
     /** Column chart - percentage stacked. */
-    COLUMN_STACKED_PERCENT_CHART = 9,
+    COLUMN_STACKED_PERCENT_CHART,
     /** Doughnut chart. */
-    DOUGHNUT_CHART = 10,
+    DOUGHNUT_CHART,
     /** Line chart. */
-    LINE_CHART = 11,
+    LINE_CHART,
     /** Line chart - stacked. */
-    LINE_STACKED_CHART = 12,
+    LINE_STACKED_CHART,
     /** Line chart - percentage stacked. */
-    LINE_STACKED_PERCENT_CHART = 13,
+    LINE_STACKED_PERCENT_CHART,
     /** Pie chart. */
-    PIE_CHART = 14,
+    PIE_CHART,
     /** Scatter chart. */
-    SCATTER_CHART = 15,
+    SCATTER_CHART,
     /** Scatter chart - straight. */
-    SCATTER_STRAIGHT_CHART = 16,
+    SCATTER_STRAIGHT_CHART,
     /** Scatter chart - straight with markers. */
-    SCATTER_STRAIGHT_WITH_MARKERS_CHART = 17,
+    SCATTER_STRAIGHT_WITH_MARKERS_CHART,
     /** Scatter chart - smooth. */
-    SCATTER_SMOOTH_CHART = 18,
+    SCATTER_SMOOTH_CHART,
     /** Scatter chart - smooth with markers. */
-    SCATTER_SMOOTH_WITH_MARKERS_CHART = 19,
+    SCATTER_SMOOTH_WITH_MARKERS_CHART,
     /** Radar chart. */
-    RADAR_CHART = 20,
+    RADAR_CHART,
     /** Radar chart - with markers. */
-    RADAR_WITH_MARKERS_CHART = 21,
+    RADAR_WITH_MARKERS_CHART,
     /** Radar chart - filled. */
-    RADAR_FILLED_CHART = 22,
+    RADAR_FILLED_CHART,
   }
 
   enum ScriptStyle {
     /** Superscript font */
     SUPERSCRIPT_FONT = 1,
     /** Subscript font */
-    SUBSCRIPT_FONT = 2,
+    SUBSCRIPT_FONT,
   }
 
   enum UnderlineStyle {
     NONE_UNDERLINE = 0,
     /** Single underline */
-    SINGLE_UNDERLINE = 1,
+    SINGLE_UNDERLINE,
     /** Double underline */
-    DOUBLE_UNDERLINE = 2,
+    DOUBLE_UNDERLINE,
     /** Single accounting underline */
-    SINGLE_ACCOUNTING_UNDERLINE = 3,
+    SINGLE_ACCOUNTING_UNDERLINE,
     /** Double accounting underline */
-    DOUBLE_ACCOUNTING_UNDERLINE = 4,
+    DOUBLE_ACCOUNTING_UNDERLINE,
   }
 
   class Worksheet {
