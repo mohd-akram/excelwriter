@@ -359,6 +359,9 @@ declare namespace ExcelWriter {
     readonly defaultURLFormat: Format;
   }
 
+  /** Convert an Excel `A1` cell string into a `(row, col)` pair. */
+  function cell(cell: string): [number, number];
+
   type Alignment = XLSX.Alignment;
   type BorderStyle = XLSX.BorderStyle;
   type ChartType = XLSX.ChartType;

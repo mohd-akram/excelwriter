@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-import { Chart, Color, Workbook } from "excelwriter";
+import { Chart, Color, Workbook, cell } from "excelwriter";
 
 /**
  * Write some data to the worksheet.
@@ -45,7 +45,7 @@ chart.setTitleName("Year End Results");
 chart.setTitleNameFont(font);
 
 /* Insert the chart into the worksheet. */
-worksheet.insertChart(6, 1, chart);
+worksheet.insertChart(...cell("B7"), chart);
 
 const data = workbook.close();
 await fs.writeFile("chart.xlsx", Buffer.from(data));

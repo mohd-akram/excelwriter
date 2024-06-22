@@ -3,12 +3,14 @@
 
 #include "chart.h"
 #include "format.h"
+#include "utility.h"
 #include "workbook.h"
 #include "worksheet.h"
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
   Chart::Init(env, exports);
   Format::Init(env, exports);
+  Utility::Init(env, exports);
   Workbook::Init(env, exports);
   Worksheet::Init(env, exports);
 

@@ -31,6 +31,7 @@
       'sources': [
         'src/chart.cc',
         'src/format.cc',
+        'src/utility.cc',
         'src/workbook.cc',
         'src/worksheet.cc',
         'src/xlsxwriter.cc',
