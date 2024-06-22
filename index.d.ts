@@ -125,65 +125,69 @@ declare namespace XLSX {
     DOUBLE_ACCOUNTING_UNDERLINE,
   }
 
-  class Worksheet {
-    freezePanes(row: number, column: number): void;
-    splitPanes(vertical: number, horizontal: number): void;
-    insertChart(row: number, column: number, chart: Chart): void;
-    insertImage(row: number, column: number, image: Uint8Array): void;
-    mergeRange(
-      firstRow: number,
-      firstColumn: number,
-      lastRow: number,
-      lastColumn: number,
-      string: string,
-      format?: Format
-    ): void;
-    setColumn(
-      firstColumn: number,
-      lastColumn: number,
-      width: number,
-      format?: Format
-    ): void;
-    setRow(row: number, height: number, format?: Format): void;
-    setFooter(footer: string): void;
-    setHeader(header: string): void;
-    setSelection(
-      firstRow: number,
-      firstColumn: number,
-      lastRow: number,
-      lastColumn: number
-    ): void;
-    writeBoolean(
-      row: number,
-      column: number,
-      boolean: boolean,
-      format?: Format
-    ): void;
-    writeDatetime(
-      row: number,
-      column: number,
-      date: Date,
-      format?: Format
-    ): void;
-    writeFormula(
-      row: number,
-      column: number,
-      formula: string,
-      format?: Format
-    ): void;
-    writeNumber(
-      row: number,
-      column: number,
-      number: number,
-      format?: Format
-    ): void;
-    writeString(
-      row: number,
-      column: number,
-      string: string,
-      format?: Format
-    ): void;
-    writeURL(row: number, column: number, url: string, format?: Format): void;
+  enum ValidationType {
+    NONE_VALIDATION_TYPE = 0,
+    /** Restrict cell input to whole/integer numbers only. */
+    INTEGER_VALIDATION_TYPE,
+    /** Restrict cell input to whole/integer numbers only, using a cell reference. */
+    INTEGER_FORMULA_VALIDATION_TYPE,
+    /** Restrict cell input to decimal numbers only. */
+    DECIMAL_VALIDATION_TYPE,
+    /** Restrict cell input to decimal numbers only, using a cell reference. */
+    DECIMAL_FORMULA_VALIDATION_TYPE,
+    /** Restrict cell input to a list of strings in a dropdown. */
+    LIST_VALIDATION_TYPE,
+    /** Restrict cell input to a list of strings in a dropdown, using a cell range. */
+    LIST_FORMULA_VALIDATION_TYPE,
+    /** Restrict cell input to date values only, using a lxw_datetime type. */
+    DATE_VALIDATION_TYPE,
+    /** Restrict cell input to date values only, using a cell reference. */
+    DATE_FORMULA_VALIDATION_TYPE,
+    /* Restrict cell input to date values only, as a serial number. Undocumented. */
+    DATE_NUMBER_VALIDATION_TYPE,
+    /** Restrict cell input to time values only, using a lxw_datetime type. */
+    TIME_VALIDATION_TYPE,
+    /** Restrict cell input to time values only, using a cell reference. */
+    TIME_FORMULA_VALIDATION_TYPE,
+    /* Restrict cell input to time values only, as a serial number. Undocumented. */
+    TIME_NUMBER_VALIDATION_TYPE,
+    /** Restrict cell input to strings of defined length. */
+    LENGTH_VALIDATION_TYPE,
+    /** Restrict cell input to strings of defined length, using a cell reference. */
+    LENGTH_FORMULA_VALIDATION_TYPE,
+    /** Restrict cell to input controlled by a custom formula that returns `TRUE/FALSE`. */
+    CUSTOM_FORMULA_VALIDATION_TYPE,
+    /** Allow any type of input. Mainly only useful for pop-up messages. */
+    ANY_VALIDATION_TYPE,
+  }
+
+  enum ValidationCriteria {
+    NONE_VALIDATION_CRITERIA = 0,
+    /** Select data between two values. */
+    BETWEEN_VALIDATION_CRITERIA,
+    /** Select data that is not between two values. */
+    NOT_BETWEEN_VALIDATION_CRITERIA,
+    /** Select data equal to a value. */
+    EQUAL_TO_VALIDATION_CRITERIA,
+    /** Select data not equal to a value. */
+    NOT_EQUAL_TO_VALIDATION_CRITERIA,
+    /** Select data greater than a value. */
+    GREATER_THAN_VALIDATION_CRITERIA,
+    /** Select data less than a value. */
+    LESS_THAN_VALIDATION_CRITERIA,
+    /** Select data greater than or equal to a value. */
+    GREATER_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA,
+    /** Select data less than or equal to a value. */
+    LESS_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA,
+  }
+
+  enum ValidationErrorType {
+    /** Show a "Stop" data validation pop-up message. This is the default. */
+    STOP_VALIDATION_ERROR_TYPE = 0,
+    /** Show an "Error" data validation pop-up message. */
+    WARNING_VALIDATION_ERROR_TYPE,
+    /** Show an "Information" data validation pop-up message. */
+    INFORMATION_VALIDATION_ERROR_TYPE,
   }
 
   type Chart = ExcelWriter.Chart;
@@ -350,6 +354,232 @@ declare namespace ExcelWriter {
     baseline?: number;
   }
 
+  interface DataValidation {
+    /** Set the validation type. */
+    validate: ValidationType;
+    /** Set the validation criteria type to select the data. */
+    criteria?: ValidationCriteria;
+    /** Controls whether a data validation is not applied to blank data in the cell. */
+    ignoreBlank?: boolean;
+    /**
+     * This parameter is used to toggle on and off the 'Show input message
+     * when cell is selected' option in the Excel data validation dialog. When
+     * the option is off an input message is not displayed even if it has been
+     * set using inputMessage. It is on by default.
+     */
+    showInput?: boolean;
+    /**
+     * This parameter is used to toggle on and off the 'Show error alert
+     * after invalid data is entered' option in the Excel data validation
+     * dialog. When the option is off an error message is not displayed even
+     * if it has been set using errorMessage. It is on by default.
+     */
+    showError?: boolean;
+    /**
+     * This parameter is used to specify the type of error dialog that is
+     * displayed.
+     */
+    errorType?: ValidationErrorType;
+    /**
+     * This parameter is used to toggle on and off the 'In-cell dropdown'
+     * option in the Excel data validation dialog. When the option is on a
+     * dropdown list will be shown for list validations. It is on by default.
+     */
+    dropdown?: boolean;
+    /**
+     * This parameter is used to set the limiting value to which the criteria
+     * is applied using a whole or decimal number.
+     */
+    valueNumber?: number;
+    /**
+     * This parameter is used to set the limiting value to which the criteria
+     * is applied using a cell reference. It is valid for any of the
+     * `_FORMULA` validation types.
+     */
+    valueFormula?: string;
+    /**
+     * This parameter is used to set a list of strings for a drop down list.
+     *
+     * Note, the string list is restricted by Excel to 255 characters,
+     * including comma separators.
+     */
+    valueList?: string[];
+    /**
+     * This parameter is used to set the limiting value to which the date or
+     * time criteria is applied.
+     */
+    valueDatetime?: Date;
+    /**
+     * This parameter is the same as `valueNumber` but for the minimum value
+     * when a `BETWEEN` criteria is used.
+     */
+    minimumNumber?: number;
+    /**
+     * This parameter is the same as `valueFormula` but for the minimum value
+     * when a `BETWEEN` criteria is used.
+     */
+    minimumFormula?: string;
+    /**
+     * This parameter is the same as `valueDatetime` but for the minimum value
+     * when a `BETWEEN` criteria is used.
+     */
+    minimumDatetime?: Date;
+    /**
+     * This parameter is the same as `valueNumber` but for the maximum value
+     * when a `BETWEEN` criteria is used.
+     */
+    maximumNumber?: number;
+    /**
+     * This parameter is the same as `valueFormula` but for the maximum value
+     * when a `BETWEEN` criteria is used.
+     */
+    maximumFormula?: string;
+    /**
+     * This parameter is the same as `valueDatetime` but for the maximum value
+     * when a `BETWEEN` criteria is used.
+     */
+    maximumDatetime?: Date;
+    /**
+     * The inputTitle parameter is used to set the title of the input message
+     * that is displayed when a cell is entered. It has no default value and
+     * is only displayed if the input message is displayed. See the
+     * `inputMessage` parameter below.
+     *
+     * The maximum title length is 32 characters.
+     */
+    inputTitle?: string;
+    /**
+     * The inputMessage parameter is used to set the input message that is
+     * displayed when a cell is entered. It has no default value.
+     *
+     * The message can be split over several lines using newlines. The maximum
+     * message length is 255 characters.
+     */
+    inputMessage?: string;
+    /**
+     * The errorTitle parameter is used to set the title of the error message
+     * that is displayed when the data validation criteria is not met. The
+     * default error title is 'Microsoft Excel'. The maximum title length is
+     * 32 characters.
+     */
+    errorTitle?: string;
+    /**
+     * The errorMessage parameter is used to set the error message that is
+     * displayed when a cell is entered. The default error message is "The
+     * value you entered is not valid. A user has restricted values that can
+     * be entered into the cell".
+     *
+     * The message can be split over several lines using newlines. The maximum
+     * message length is 255 characters.
+     */
+    errorMessage?: string;
+  }
+
+  class Worksheet {
+    static readonly NONE_VALIDATION_TYPE: XLSX.ValidationType.NONE_VALIDATION_TYPE;
+    static readonly INTEGER_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_VALIDATION_TYPE;
+    static readonly INTEGER_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_FORMULA_VALIDATION_TYPE;
+    static readonly DECIMAL_VALIDATION_TYPE: XLSX.ValidationType.DECIMAL_VALIDATION_TYPE;
+    static readonly DECIMAL_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.DECIMAL_FORMULA_VALIDATION_TYPE;
+    static readonly LIST_VALIDATION_TYPE: XLSX.ValidationType.LIST_VALIDATION_TYPE;
+    static readonly LIST_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.LIST_FORMULA_VALIDATION_TYPE;
+    static readonly DATE_VALIDATION_TYPE: XLSX.ValidationType.DATE_VALIDATION_TYPE;
+    static readonly DATE_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.DATE_FORMULA_VALIDATION_TYPE;
+    static readonly DATE_NUMBER_VALIDATION_TYPE: XLSX.ValidationType.DATE_NUMBER_VALIDATION_TYPE;
+    static readonly TIME_VALIDATION_TYPE: XLSX.ValidationType.TIME_VALIDATION_TYPE;
+    static readonly TIME_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.TIME_FORMULA_VALIDATION_TYPE;
+    static readonly TIME_NUMBER_VALIDATION_TYPE: XLSX.ValidationType.TIME_NUMBER_VALIDATION_TYPE;
+    static readonly LENGTH_VALIDATION_TYPE: XLSX.ValidationType.LENGTH_VALIDATION_TYPE;
+    static readonly LENGTH_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.LENGTH_FORMULA_VALIDATION_TYPE;
+    static readonly CUSTOM_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.CUSTOM_FORMULA_VALIDATION_TYPE;
+    static readonly ANY_VALIDATION_TYPE: XLSX.ValidationType.ANY_VALIDATION_TYPE;
+
+    static readonly NONE_VALIDATION_CRITERIA: XLSX.ValidationCriteria.NONE_VALIDATION_CRITERIA;
+    static readonly BETWEEN_VALIDATION_CRITERIA: XLSX.ValidationCriteria.BETWEEN_VALIDATION_CRITERIA;
+    static readonly NOT_BETWEEN_VALIDATION_CRITERIA: XLSX.ValidationCriteria.NOT_BETWEEN_VALIDATION_CRITERIA;
+    static readonly EQUAL_TO_VALIDATION_CRITERIA: XLSX.ValidationCriteria.EQUAL_TO_VALIDATION_CRITERIA;
+    static readonly NOT_EQUAL_TO_VALIDATION_CRITERIA: XLSX.ValidationCriteria.NOT_EQUAL_TO_VALIDATION_CRITERIA;
+    static readonly GREATER_THAN_VALIDATION_CRITERIA: XLSX.ValidationCriteria.GREATER_THAN_VALIDATION_CRITERIA;
+    static readonly LESS_THAN_VALIDATION_CRITERIA: XLSX.ValidationCriteria.LESS_THAN_VALIDATION_CRITERIA;
+    static readonly GREATER_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA: XLSX.ValidationCriteria.GREATER_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA;
+    static readonly LESS_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA: XLSX.ValidationCriteria.LESS_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA;
+
+    static readonly STOP_VALIDATION_ERROR_TYPE: XLSX.ValidationErrorType.STOP_VALIDATION_ERROR_TYPE;
+    static readonly WARNING_VALIDATION_ERROR_TYPE: XLSX.ValidationErrorType.WARNING_VALIDATION_ERROR_TYPE;
+    static readonly INFORMATION_VALIDATION_ERROR_TYPE: XLSX.ValidationErrorType.INFORMATION_VALIDATION_ERROR_TYPE;
+
+    dataValidationCell(
+      row: number,
+      column: number,
+      validation: DataValidation
+    ): void;
+    dataValidationRange(
+      firstRow: number,
+      firstColumn: number,
+      lastRow: number,
+      lastColumn: number,
+      validation: DataValidation
+    ): void;
+    freezePanes(row: number, column: number): void;
+    splitPanes(vertical: number, horizontal: number): void;
+    insertChart(row: number, column: number, chart: Chart): void;
+    insertImage(row: number, column: number, image: Uint8Array): void;
+    mergeRange(
+      firstRow: number,
+      firstColumn: number,
+      lastRow: number,
+      lastColumn: number,
+      string: string,
+      format?: Format
+    ): void;
+    setColumn(
+      firstColumn: number,
+      lastColumn: number,
+      width: number,
+      format?: Format
+    ): void;
+    setRow(row: number, height: number, format?: Format): void;
+    setFooter(footer: string): void;
+    setHeader(header: string): void;
+    setSelection(
+      firstRow: number,
+      firstColumn: number,
+      lastRow: number,
+      lastColumn: number
+    ): void;
+    writeBoolean(
+      row: number,
+      column: number,
+      boolean: boolean,
+      format?: Format
+    ): void;
+    writeDatetime(
+      row: number,
+      column: number,
+      date: Date,
+      format?: Format
+    ): void;
+    writeFormula(
+      row: number,
+      column: number,
+      formula: string,
+      format?: Format
+    ): void;
+    writeNumber(
+      row: number,
+      column: number,
+      number: number,
+      format?: Format
+    ): void;
+    writeString(
+      row: number,
+      column: number,
+      string: string,
+      format?: Format
+    ): void;
+    writeURL(row: number, column: number, url: string, format?: Format): void;
+  }
+
   class Workbook {
     addChart(type: ChartType): Chart;
     addFormat(): Format;
@@ -367,7 +597,9 @@ declare namespace ExcelWriter {
   type ChartType = XLSX.ChartType;
   type ScriptStyle = XLSX.ScriptStyle;
   type UnderlineStyle = XLSX.UnderlineStyle;
-  type Worksheet = XLSX.Worksheet;
+  type ValidationType = XLSX.ValidationType;
+  type ValidationCriteria = XLSX.ValidationCriteria;
+  type ValidationErrorType = XLSX.ValidationErrorType;
 }
 
 export = ExcelWriter;
