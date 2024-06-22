@@ -5,11 +5,34 @@
 #include "format.h"
 #include "worksheet.h"
 
+class DataValidation {
+ public:
+  DataValidation(const Napi::Value& value);
+  inline operator lxw_data_validation*() { return &data_validation; };
+
+ private:
+  std::string value_formula;
+  std::string minimum_formula;
+  std::string maximum_formula;
+  std::string input_title;
+  std::string input_message;
+  std::string error_title;
+  std::string error_message;
+  std::vector<std::string> values;
+  std::unique_ptr<const char*[]> value_list = nullptr;
+
+  lxw_data_validation data_validation = {};
+};
+
 Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
   auto func = DefineClass(
       env,
       "Worksheet",
       {
+          InstanceMethod<&Worksheet::DataValidationCell>("dataValidationCell",
+                                                         napi_default_method),
+          InstanceMethod<&Worksheet::DataValidationRange>("dataValidationRange",
+                                                          napi_default_method),
           InstanceMethod<&Worksheet::FreezePanes>("freezePanes",
                                                   napi_default_method),
           InstanceMethod<&Worksheet::SplitPanes>("splitPanes",
@@ -40,6 +63,107 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
           InstanceMethod<&Worksheet::WriteString>("writeString",
                                                   napi_default_method),
           InstanceMethod<&Worksheet::WriteURL>("writeURL", napi_default_method),
+
+          StaticValue("NONE_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_NONE),
+                      napi_enumerable),
+          StaticValue("INTEGER_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_INTEGER),
+                      napi_enumerable),
+          StaticValue(
+              "INTEGER_FORMULA_VALIDATION_TYPE",
+              Napi::Number::New(env, LXW_VALIDATION_TYPE_INTEGER_FORMULA),
+              napi_enumerable),
+          StaticValue("DECIMAL_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_DECIMAL),
+                      napi_enumerable),
+          StaticValue(
+              "DECIMAL_FORMULA_VALIDATION_TYPE",
+              Napi::Number::New(env, LXW_VALIDATION_TYPE_DECIMAL_FORMULA),
+              napi_enumerable),
+          StaticValue("LIST_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_LIST),
+                      napi_enumerable),
+          StaticValue("LIST_FORMULA_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_LIST_FORMULA),
+                      napi_enumerable),
+          StaticValue("DATE_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_DATE),
+                      napi_enumerable),
+          StaticValue("DATE_FORMULA_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_DATE_FORMULA),
+                      napi_enumerable),
+          StaticValue("DATE_NUMBER_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_DATE_NUMBER),
+                      napi_enumerable),
+          StaticValue("TIME_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_TIME),
+                      napi_enumerable),
+          StaticValue("TIME_FORMULA_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_TIME_FORMULA),
+                      napi_enumerable),
+          StaticValue("TIME_NUMBER_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_TIME_NUMBER),
+                      napi_enumerable),
+          StaticValue("LENGTH_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_LENGTH),
+                      napi_enumerable),
+          StaticValue(
+              "LENGTH_FORMULA_VALIDATION_TYPE",
+              Napi::Number::New(env, LXW_VALIDATION_TYPE_LENGTH_FORMULA),
+              napi_enumerable),
+          StaticValue(
+              "CUSTOM_FORMULA_VALIDATION_TYPE",
+              Napi::Number::New(env, LXW_VALIDATION_TYPE_CUSTOM_FORMULA),
+              napi_enumerable),
+          StaticValue("ANY_VALIDATION_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_TYPE_ANY),
+                      napi_enumerable),
+
+          StaticValue("NONE_VALIDATION_CRITERIA",
+                      Napi::Number::New(env, LXW_VALIDATION_CRITERIA_NONE),
+                      napi_enumerable),
+          StaticValue("BETWEEN_VALIDATION_CRITERIA",
+                      Napi::Number::New(env, LXW_VALIDATION_CRITERIA_BETWEEN),
+                      napi_enumerable),
+          StaticValue(
+              "NOT_BETWEEN_VALIDATION_CRITERIA",
+              Napi::Number::New(env, LXW_VALIDATION_CRITERIA_NOT_BETWEEN),
+              napi_enumerable),
+          StaticValue("EQUAL_TO_VALIDATION_CRITERIA",
+                      Napi::Number::New(env, LXW_VALIDATION_CRITERIA_EQUAL_TO),
+                      napi_enumerable),
+          StaticValue(
+              "NOT_EQUAL_TO_VALIDATION_CRITERIA",
+              Napi::Number::New(env, LXW_VALIDATION_CRITERIA_NOT_EQUAL_TO),
+              napi_enumerable),
+          StaticValue(
+              "GREATER_THAN_VALIDATION_CRITERIA",
+              Napi::Number::New(env, LXW_VALIDATION_CRITERIA_GREATER_THAN),
+              napi_enumerable),
+          StaticValue("LESS_THAN_VALIDATION_CRITERIA",
+                      Napi::Number::New(env, LXW_VALIDATION_CRITERIA_LESS_THAN),
+                      napi_enumerable),
+          StaticValue(
+              "GREATER_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA",
+              Napi::Number::New(
+                  env, LXW_VALIDATION_CRITERIA_GREATER_THAN_OR_EQUAL_TO),
+              napi_enumerable),
+          StaticValue("LESS_THAN_OR_EQUAL_TO_VALIDATION_CRITERIA",
+                      Napi::Number::New(
+                          env, LXW_VALIDATION_CRITERIA_LESS_THAN_OR_EQUAL_TO),
+                      napi_enumerable),
+
+          StaticValue("STOP_VALIDATION_ERROR_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_ERROR_TYPE_STOP),
+                      napi_enumerable),
+          StaticValue("WARNING_VALIDATION_ERROR_TYPE",
+                      Napi::Number::New(env, LXW_VALIDATION_ERROR_TYPE_WARNING),
+                      napi_enumerable),
+          StaticValue(
+              "INFORMATION_VALIDATION_ERROR_TYPE",
+              Napi::Number::New(env, LXW_VALIDATION_ERROR_TYPE_INFORMATION),
+              napi_enumerable),
       });
 
   auto data = env.GetInstanceData<Napi::ObjectReference>();
@@ -51,6 +175,7 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
   }
 
   data->Set("WorksheetConstructor", func);
+  exports["Worksheet"] = func;
 
   return exports;
 }
@@ -65,6 +190,26 @@ Napi::Value Worksheet::New(Napi::Env env, lxw_worksheet* worksheet) {
       ->Get("WorksheetConstructor")
       .As<Napi::Function>()
       .New({Napi::External<lxw_worksheet>::New(env, worksheet)});
+}
+
+Napi::Value Worksheet::DataValidationCell(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_data_validation_cell(worksheet,
+                                 info[0].As<Napi::Number>(),
+                                 info[1].As<Napi::Number>().Uint32Value(),
+                                 DataValidation(info[2]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::DataValidationRange(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_data_validation_range(worksheet,
+                                  info[0].As<Napi::Number>(),
+                                  info[1].As<Napi::Number>().Uint32Value(),
+                                  info[2].As<Napi::Number>(),
+                                  info[3].As<Napi::Number>().Uint32Value(),
+                                  DataValidation(info[4]));
+  return env.Undefined();
 }
 
 Napi::Value Worksheet::FreezePanes(const Napi::CallbackInfo& info) {
@@ -222,4 +367,128 @@ Napi::Value Worksheet::WriteURL(const Napi::CallbackInfo& info) {
                       info[2].As<Napi::String>().Utf8Value().c_str(),
                       Format::Get(info[3]));
   return env.Undefined();
+}
+
+namespace {
+
+Napi::Number callDateMethod(const Napi::Object& date, const char* method) {
+  return date.Get(method)
+      .As<Napi::Function>()
+      .Call(date, {})
+      .As<Napi::Number>();
+}
+
+lxw_datetime convertDatetime(const Napi::Object& date) {
+  lxw_datetime datetime = {};
+  datetime.year = callDateMethod(date, "getFullYear");
+  datetime.month = callDateMethod(date, "getMonth").Int32Value() + 1;
+  datetime.day = callDateMethod(date, "getDate");
+  datetime.hour = callDateMethod(date, "getHours");
+  datetime.min = callDateMethod(date, "getMinutes");
+  datetime.sec = callDateMethod(date, "getSeconds").DoubleValue() +
+                 callDateMethod(date, "getMilliseconds").DoubleValue() / 1000.0;
+  return datetime;
+}
+
+}  // namespace
+
+DataValidation::DataValidation(const Napi::Value& value) {
+  auto obj = value.As<Napi::Object>();
+  auto validate = obj.Get("validate");
+  auto criteria = obj.Get("criteria");
+  auto ignoreBlank = obj.Get("ignoreBlank");
+  auto showInput = obj.Get("showInput");
+  auto showError = obj.Get("showError");
+  auto errorType = obj.Get("errorType");
+  auto dropdown = obj.Get("dropdown");
+  auto valueNumber = obj.Get("valueNumber");
+  auto valueFormula = obj.Get("valueFormula");
+  auto valueList = obj.Get("valueList");
+  auto valueDatetime = obj.Get("valueDatetime");
+  auto minimumNumber = obj.Get("minimumNumber");
+  auto minimumFormula = obj.Get("minimumFormula");
+  auto minimumDatetime = obj.Get("minimumDatetime");
+  auto maximumNumber = obj.Get("maximumNumber");
+  auto maximumFormula = obj.Get("maximumFormula");
+  auto maximumDatetime = obj.Get("maximumDatetime");
+  auto inputTitle = obj.Get("inputTitle");
+  auto inputMessage = obj.Get("inputMessage");
+  auto errorTitle = obj.Get("errorTitle");
+  auto errorMessage = obj.Get("errorMessage");
+
+  if (!validate.IsUndefined())
+    data_validation.validate = validate.As<Napi::Number>().Uint32Value();
+  if (!criteria.IsUndefined())
+    data_validation.criteria = criteria.As<Napi::Number>().Uint32Value();
+  if (!errorType.IsUndefined())
+    data_validation.error_type = errorType.As<Napi::Number>().Uint32Value();
+
+  if (!ignoreBlank.IsUndefined())
+    data_validation.ignore_blank = ignoreBlank.As<Napi::Boolean>();
+  if (!showInput.IsUndefined())
+    data_validation.show_input = showInput.As<Napi::Boolean>();
+  if (!showError.IsUndefined())
+    data_validation.show_error = showError.As<Napi::Boolean>();
+  if (!dropdown.IsUndefined())
+    data_validation.dropdown = dropdown.As<Napi::Boolean>();
+
+  if (!valueNumber.IsUndefined())
+    data_validation.value_number = valueNumber.As<Napi::Number>();
+  if (!minimumNumber.IsUndefined())
+    data_validation.minimum_number = minimumNumber.As<Napi::Number>();
+  if (!maximumNumber.IsUndefined())
+    data_validation.maximum_number = maximumNumber.As<Napi::Number>();
+
+  if (!valueDatetime.IsUndefined())
+    data_validation.value_datetime =
+        convertDatetime(valueDatetime.As<Napi::Object>());
+  if (!minimumDatetime.IsUndefined())
+    data_validation.minimum_datetime =
+        convertDatetime(minimumDatetime.As<Napi::Object>());
+  if (!maximumDatetime.IsUndefined())
+    data_validation.maximum_datetime =
+        convertDatetime(maximumDatetime.As<Napi::Object>());
+
+  if (!valueFormula.IsUndefined()) {
+    value_formula = valueFormula.As<Napi::String>();
+    data_validation.value_formula = value_formula.c_str();
+  }
+  if (!minimumFormula.IsUndefined()) {
+    minimum_formula = minimumFormula.As<Napi::String>();
+    data_validation.minimum_formula = minimum_formula.c_str();
+  }
+  if (!maximumFormula.IsUndefined()) {
+    maximum_formula = maximumFormula.As<Napi::String>();
+    data_validation.maximum_formula = maximum_formula.c_str();
+  }
+  if (!inputTitle.IsUndefined()) {
+    input_title = inputTitle.As<Napi::String>();
+    data_validation.input_title = input_title.c_str();
+  }
+  if (!inputMessage.IsUndefined()) {
+    input_message = inputMessage.As<Napi::String>();
+    data_validation.input_message = input_message.c_str();
+  }
+  if (!errorTitle.IsUndefined()) {
+    error_title = errorTitle.As<Napi::String>();
+    data_validation.error_title = error_title.c_str();
+  }
+  if (!errorMessage.IsUndefined()) {
+    error_message = errorMessage.As<Napi::String>();
+    data_validation.error_message = error_message.c_str();
+  }
+
+  if (!valueList.IsUndefined()) {
+    auto array = valueList.As<Napi::Array>();
+    auto length = array.Length();
+
+    for (uint32_t i = 0; i < length; i++)
+      values.push_back(array.Get(i).As<Napi::String>());
+
+    value_list = std::make_unique<const char*[]>(length + 1);
+    for (uint32_t i = 0; i < length; i++) value_list[i] = values[i].c_str();
+    value_list[length] = nullptr;
+
+    data_validation.value_list = value_list.get();
+  }
 }

@@ -8,6 +8,8 @@ class Worksheet : public Napi::ObjectWrap<Worksheet> {
   Worksheet(const Napi::CallbackInfo& info);
 
  private:
+  Napi::Value DataValidationCell(const Napi::CallbackInfo& info);
+  Napi::Value DataValidationRange(const Napi::CallbackInfo& info);
   Napi::Value FreezePanes(const Napi::CallbackInfo& info);
   Napi::Value SplitPanes(const Napi::CallbackInfo& info);
   Napi::Value InsertChart(const Napi::CallbackInfo& info);
