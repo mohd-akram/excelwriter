@@ -1,0 +1,56 @@
+#!/bin/sh
+
+set -eu
+
+run_example() (
+	name=$1
+	shift
+	xlsx=$(grep -o '"[^"]*\.xlsx"' "$name" | cut -d\" -f2)
+	d=$(basename "$xlsx" .xlsx).d
+	rm -rf "$d"
+	"$@"
+	unzip -qd "$d" "$xlsx"
+	ed -s "$d/docProps/core.xml" >&2 <<-EOF
+	s|<dcterms:created xsi:type="dcterms:W3CDTF">$(date -u +%Y-%m-%d)T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z</dcterms:created>|ignore|
+	s|<dcterms:modified xsi:type="dcterms:W3CDTF">$(date -u +%Y-%m-%d)T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z</dcterms:modified>|ignore|
+	w
+	q
+	EOF
+	# We insert the image from a buffer so there's no file name
+	if [ "$name" = demo.js ]; then
+		ed -s "$d/xl/drawings/drawing1.xml" >&2 <<-EOF
+		s|<xdr:cNvPr id="2" name="Picture 1"/>|<xdr:cNvPr id="2" name="Picture 1" descr="logo.png"/>|
+		w
+		q
+		EOF
+	fi
+	# ed adds a new line, so add one here too
+	if [ "$name" = demo.c ]; then
+		ed -s "$d/xl/drawings/drawing1.xml" >&2 <<-EOF
+		w
+		q
+		EOF
+	fi
+	echo "$d"
+)
+
+compare_example() (
+	c=$(printf %s "$1" | tr - _)
+	j=$1
+	adir=src/libxlsxwriter/examples
+	bdir=examples
+	a=$(cd "$adir" && make -s "$c" && run_example "$c.c" "./$c") &&
+	b=$(cd "$bdir" && run_example "$j.js" node "$j") &&
+	git diff --no-index --color-words "$adir/$a" "$bdir/$b"
+)
+
+err=0
+for f in examples/*.js; do
+	e="$(basename "$f" .js)"
+	printf >&2 "Comparing example %s\n" "$e"
+	if ! compare_example "$e"; then
+		err=1
+	fi
+done
+
+exit "$err"
