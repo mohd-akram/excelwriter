@@ -281,6 +281,7 @@ Napi::Value Worksheet::FilterList(const Napi::CallbackInfo& info) {
   auto length = array.Length();
 
   std::vector<std::string> values;
+  values.reserve(length);
   for (uint32_t i = 0; i < length; i++)
     values.push_back(array.Get(i).As<Napi::String>());
 
@@ -529,7 +530,7 @@ FilterRule::FilterRule(const Napi::Value& val) {
 
 DataValidation::DataValidation(const Napi::Value& value) {
   auto obj = value.As<Napi::Object>();
-  auto validate = obj.Get("validate");
+  auto validate = obj.Get("validate").As<Napi::Number>();
   auto criteria = obj.Get("criteria");
   auto ignoreBlank = obj.Get("ignoreBlank");
   auto showInput = obj.Get("showInput");
@@ -551,8 +552,8 @@ DataValidation::DataValidation(const Napi::Value& value) {
   auto errorTitle = obj.Get("errorTitle");
   auto errorMessage = obj.Get("errorMessage");
 
-  if (!validate.IsUndefined())
-    data_validation.validate = validate.As<Napi::Number>().Uint32Value();
+  data_validation.validate = validate.Uint32Value();
+
   if (!criteria.IsUndefined())
     data_validation.criteria = criteria.As<Napi::Number>().Uint32Value();
   if (!errorType.IsUndefined())
@@ -622,6 +623,7 @@ DataValidation::DataValidation(const Napi::Value& value) {
     auto array = valueList.As<Napi::Array>();
     auto length = array.Length();
 
+    values.reserve(length);
     for (uint32_t i = 0; i < length; i++)
       values.push_back(array.Get(i).As<Napi::String>());
 
