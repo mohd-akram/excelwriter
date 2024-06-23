@@ -271,10 +271,27 @@ Napi::Value Worksheet::SetColumn(const Napi::CallbackInfo& info) {
 
 Napi::Value Worksheet::SetRow(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_set_row(worksheet,
-                    info[0].As<Napi::Number>(),
-                    info[1].As<Napi::Number>(),
-                    Format::Get(info[2]));
+  if (info.Length() >= 4) {
+    lxw_row_col_options options = {};
+    auto opts = info[3].As<Napi::Object>();
+    auto hidden = opts.Get("hidden");
+    auto level = opts.Get("level");
+    auto collapsed = opts.Get("collapsed");
+    if (!hidden.IsUndefined()) options.hidden = hidden.As<Napi::Boolean>();
+    if (!level.IsUndefined())
+      options.level = level.As<Napi::Number>().Uint32Value();
+    if (!collapsed.IsUndefined())
+      options.collapsed = collapsed.As<Napi::Boolean>();
+    worksheet_set_row_opt(worksheet,
+                          info[0].As<Napi::Number>(),
+                          info[1].As<Napi::Number>(),
+                          Format::Get(info[2]),
+                          &options);
+  } else
+    worksheet_set_row(worksheet,
+                      info[0].As<Napi::Number>(),
+                      info[1].As<Napi::Number>(),
+                      Format::Get(info[2]));
   return env.Undefined();
 }
 

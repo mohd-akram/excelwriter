@@ -475,6 +475,15 @@ declare namespace ExcelWriter {
     errorMessage?: string;
   }
 
+  interface RowColOptions {
+    /** Hide the row/column. */
+    hidden?: boolean;
+    /** Outline level. */
+    level?: number;
+    /** Set the outline row as collapsed. */
+    collapsed?: boolean;
+  }
+
   class Worksheet {
     static readonly NONE_VALIDATION_TYPE: XLSX.ValidationType.NONE_VALIDATION_TYPE;
     static readonly INTEGER_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_VALIDATION_TYPE;
@@ -539,6 +548,12 @@ declare namespace ExcelWriter {
       format?: Format
     ): void;
     setRow(row: number, height: number, format?: Format): void;
+    setRow(
+      row: number,
+      height: number,
+      format: Format | null,
+      options: RowColOptions
+    ): void;
     setFooter(footer: string): void;
     setHeader(header: string): void;
     setSelection(
