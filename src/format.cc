@@ -173,9 +173,7 @@ Format::Format(const Napi::CallbackInfo& info)
 }
 
 lxw_format* Format::Get(Napi::Value value) {
-  return value.IsUndefined() || value.IsNull()
-             ? nullptr
-             : Format::Unwrap(value.As<Napi::Object>())->format;
+  return Format::Unwrap(value.As<Napi::Object>())->format;
 }
 
 Napi::Value Format::New(Napi::Env env, lxw_format* format) {
