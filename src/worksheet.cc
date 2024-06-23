@@ -64,6 +64,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                                                   napi_default_method),
           InstanceMethod<&Worksheet::WriteURL>("writeURL", napi_default_method),
 
+          StaticValue("DEFAULT_ROW_HEIGHT",
+                      Napi::Number::New(env, LXW_DEF_ROW_HEIGHT),
+                      napi_enumerable),
+
           StaticValue("NONE_VALIDATION_TYPE",
                       Napi::Number::New(env, LXW_VALIDATION_TYPE_NONE),
                       napi_enumerable),

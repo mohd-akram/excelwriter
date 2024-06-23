@@ -485,6 +485,8 @@ declare namespace ExcelWriter {
   }
 
   class Worksheet {
+    static readonly DEFAULT_ROW_HEIGHT: number;
+
     static readonly NONE_VALIDATION_TYPE: XLSX.ValidationType.NONE_VALIDATION_TYPE;
     static readonly INTEGER_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_VALIDATION_TYPE;
     static readonly INTEGER_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_FORMULA_VALIDATION_TYPE;
