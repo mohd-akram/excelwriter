@@ -31,10 +31,11 @@ run_example() (
 		q
 		EOF
 	fi
-	echo "$d"
+	printf '%s\n' "$d"
 )
 
 compare_example() (
+	printf >&2 'Comparing example %s\n' "$1"
 	c=$(printf %s "$1" | tr - _)
 	j=$1
 	adir=src/libxlsxwriter/examples
@@ -45,12 +46,15 @@ compare_example() (
 )
 
 err=0
-for f in examples/*.js; do
-	e="$(basename "$f" .js)"
-	printf >&2 "Comparing example %s\n" "$e"
-	if ! compare_example "$e"; then
-		err=1
-	fi
-done
+
+if [ $# -gt 0 ]; then
+	for e; do
+		if ! compare_example "$e"; then err=1; fi
+	done
+else
+	for f in examples/*.js; do
+		if ! compare_example "$(basename "$f" .js)"; then err=1; fi
+	done
+fi
 
 exit "$err"
