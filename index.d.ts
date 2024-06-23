@@ -126,9 +126,8 @@ declare namespace XLSX {
   }
 
   enum FilterCriteria {
-    NONE_FILTER_CRITERIA,
     /** Filter cells equal to a value. */
-    EQUAL_TO_FILTER_CRITERIA,
+    EQUAL_TO_FILTER_CRITERIA = 1,
     /** Filter cells not equal to a value. */
     NOT_EQUAL_TO_FILTER_CRITERIA,
     /** Filter cells greater than a value. */
@@ -153,9 +152,8 @@ declare namespace XLSX {
   }
 
   enum ValidationType {
-    NONE_VALIDATION_TYPE,
     /** Restrict cell input to whole/integer numbers only. */
-    INTEGER_VALIDATION_TYPE,
+    INTEGER_VALIDATION_TYPE = 1,
     /** Restrict cell input to whole/integer numbers only, using a cell reference. */
     INTEGER_FORMULA_VALIDATION_TYPE,
     /** Restrict cell input to decimal numbers only. */
@@ -189,9 +187,8 @@ declare namespace XLSX {
   }
 
   enum ValidationCriteria {
-    NONE_VALIDATION_CRITERIA,
     /** Select data between two values. */
-    BETWEEN_VALIDATION_CRITERIA,
+    BETWEEN_VALIDATION_CRITERIA = 1,
     /** Select data that is not between two values. */
     NOT_BETWEEN_VALIDATION_CRITERIA,
     /** Select data equal to a value. */
@@ -520,7 +517,6 @@ declare namespace ExcelWriter {
   class Worksheet {
     static readonly DEFAULT_ROW_HEIGHT: number;
 
-    static readonly NONE_FILTER_CRITERIA: XLSX.FilterCriteria.NONE_FILTER_CRITERIA;
     static readonly EQUAL_TO_FILTER_CRITERIA: XLSX.FilterCriteria.EQUAL_TO_FILTER_CRITERIA;
     static readonly NOT_EQUAL_TO_FILTER_CRITERIA: XLSX.FilterCriteria.NOT_EQUAL_TO_FILTER_CRITERIA;
     static readonly GREATER_THAN_FILTER_CRITERIA: XLSX.FilterCriteria.GREATER_THAN_FILTER_CRITERIA;
@@ -533,7 +529,6 @@ declare namespace ExcelWriter {
     static readonly AND_FILTER: XLSX.FilterOperator.AND_FILTER;
     static readonly OR_FILTER: XLSX.FilterOperator.OR_FILTER;
 
-    static readonly NONE_VALIDATION_TYPE: XLSX.ValidationType.NONE_VALIDATION_TYPE;
     static readonly INTEGER_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_VALIDATION_TYPE;
     static readonly INTEGER_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_FORMULA_VALIDATION_TYPE;
     static readonly DECIMAL_VALIDATION_TYPE: XLSX.ValidationType.DECIMAL_VALIDATION_TYPE;
@@ -551,7 +546,6 @@ declare namespace ExcelWriter {
     static readonly CUSTOM_FORMULA_VALIDATION_TYPE: XLSX.ValidationType.CUSTOM_FORMULA_VALIDATION_TYPE;
     static readonly ANY_VALIDATION_TYPE: XLSX.ValidationType.ANY_VALIDATION_TYPE;
 
-    static readonly NONE_VALIDATION_CRITERIA: XLSX.ValidationCriteria.NONE_VALIDATION_CRITERIA;
     static readonly BETWEEN_VALIDATION_CRITERIA: XLSX.ValidationCriteria.BETWEEN_VALIDATION_CRITERIA;
     static readonly NOT_BETWEEN_VALIDATION_CRITERIA: XLSX.ValidationCriteria.NOT_BETWEEN_VALIDATION_CRITERIA;
     static readonly EQUAL_TO_VALIDATION_CRITERIA: XLSX.ValidationCriteria.EQUAL_TO_VALIDATION_CRITERIA;

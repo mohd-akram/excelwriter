@@ -88,9 +88,6 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                       napi_enumerable),
 
           // Filter criteria
-          StaticValue("NONE_FILTER_CRITERIA",
-                      Napi::Number::New(env, LXW_FILTER_CRITERIA_NONE),
-                      napi_enumerable),
           StaticValue("EQUAL_TO_FILTER_CRITERIA",
                       Napi::Number::New(env, LXW_FILTER_CRITERIA_EQUAL_TO),
                       napi_enumerable),
@@ -127,9 +124,6 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                       napi_enumerable),
 
           // Validation type
-          StaticValue("NONE_VALIDATION_TYPE",
-                      Napi::Number::New(env, LXW_VALIDATION_TYPE_NONE),
-                      napi_enumerable),
           StaticValue("INTEGER_VALIDATION_TYPE",
                       Napi::Number::New(env, LXW_VALIDATION_TYPE_INTEGER),
                       napi_enumerable),
@@ -184,9 +178,6 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                       napi_enumerable),
 
           // Validation criteria
-          StaticValue("NONE_VALIDATION_CRITERIA",
-                      Napi::Number::New(env, LXW_VALIDATION_CRITERIA_NONE),
-                      napi_enumerable),
           StaticValue("BETWEEN_VALIDATION_CRITERIA",
                       Napi::Number::New(env, LXW_VALIDATION_CRITERIA_BETWEEN),
                       napi_enumerable),
