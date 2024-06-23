@@ -125,6 +125,33 @@ declare namespace XLSX {
     DOUBLE_ACCOUNTING_UNDERLINE,
   }
 
+  enum FilterCriteria {
+    NONE_FILTER_CRITERIA,
+    /** Filter cells equal to a value. */
+    EQUAL_TO_FILTER_CRITERIA,
+    /** Filter cells not equal to a value. */
+    NOT_EQUAL_TO_FILTER_CRITERIA,
+    /** Filter cells greater than a value. */
+    GREATER_THAN_FILTER_CRITERIA,
+    /** Filter cells less than a value. */
+    LESS_THAN_FILTER_CRITERIA,
+    /** Filter cells greater than or equal to a value. */
+    GREATER_THAN_OR_EQUAL_TO_FILTER_CRITERIA,
+    /** Filter cells less than or equal to a value. */
+    LESS_THAN_OR_EQUAL_TO_FILTER_CRITERIA,
+    /** Filter cells that are blank. */
+    BLANKS_FILTER_CRITERIA,
+    /** Filter cells that are not blank. */
+    NON_BLANKS_FILTER_CRITERIA,
+  }
+
+  enum FilterOperator {
+    /** Logical "and" of 2 filter rules. */
+    AND_FILTER,
+    /** Logical "or" of 2 filter rules. */
+    OR_FILTER,
+  }
+
   enum ValidationType {
     NONE_VALIDATION_TYPE = 0,
     /** Restrict cell input to whole/integer numbers only. */
@@ -475,6 +502,12 @@ declare namespace ExcelWriter {
     errorMessage?: string;
   }
 
+  interface FilterRule {
+    criteria: FilterCriteria;
+    valueString?: string;
+    value?: number;
+  }
+
   interface RowColOptions {
     /** Hide the row/column. */
     hidden?: boolean;
@@ -486,6 +519,19 @@ declare namespace ExcelWriter {
 
   class Worksheet {
     static readonly DEFAULT_ROW_HEIGHT: number;
+
+    static readonly NONE_FILTER_CRITERIA: XLSX.FilterCriteria.NONE_FILTER_CRITERIA;
+    static readonly EQUAL_TO_FILTER_CRITERIA: XLSX.FilterCriteria.EQUAL_TO_FILTER_CRITERIA;
+    static readonly NOT_EQUAL_TO_FILTER_CRITERIA: XLSX.FilterCriteria.NOT_EQUAL_TO_FILTER_CRITERIA;
+    static readonly GREATER_THAN_FILTER_CRITERIA: XLSX.FilterCriteria.GREATER_THAN_FILTER_CRITERIA;
+    static readonly LESS_THAN_FILTER_CRITERIA: XLSX.FilterCriteria.LESS_THAN_FILTER_CRITERIA;
+    static readonly GREATER_THAN_OR_EQUAL_TO_FILTER_CRITERIA: XLSX.FilterCriteria.GREATER_THAN_OR_EQUAL_TO_FILTER_CRITERIA;
+    static readonly LESS_THAN_OR_EQUAL_TO_FILTER_CRITERIA: XLSX.FilterCriteria.LESS_THAN_OR_EQUAL_TO_FILTER_CRITERIA;
+    static readonly BLANKS_FILTER_CRITERIA: XLSX.FilterCriteria.BLANKS_FILTER_CRITERIA;
+    static readonly NON_BLANKS_FILTER_CRITERIA: XLSX.FilterCriteria.NON_BLANKS_FILTER_CRITERIA;
+
+    static readonly AND_FILTER: XLSX.FilterOperator.AND_FILTER;
+    static readonly OR_FILTER: XLSX.FilterOperator.OR_FILTER;
 
     static readonly NONE_VALIDATION_TYPE: XLSX.ValidationType.NONE_VALIDATION_TYPE;
     static readonly INTEGER_VALIDATION_TYPE: XLSX.ValidationType.INTEGER_VALIDATION_TYPE;
@@ -519,6 +565,20 @@ declare namespace ExcelWriter {
     static readonly WARNING_VALIDATION_ERROR_TYPE: XLSX.ValidationErrorType.WARNING_VALIDATION_ERROR_TYPE;
     static readonly INFORMATION_VALIDATION_ERROR_TYPE: XLSX.ValidationErrorType.INFORMATION_VALIDATION_ERROR_TYPE;
 
+    autofilter(
+      firstRow: number,
+      firstColumn: number,
+      lastRow: number,
+      lastColumn: number
+    ): void;
+    filterColumn(column: number, rule: FilterRule): void;
+    filterColumn(
+      column: number,
+      rule1: FilterRule,
+      rule2: FilterRule,
+      operator: FilterOperator
+    ): void;
+    filterList(column: number, list: string[]): void;
     dataValidationCell(
       row: number,
       column: number,
@@ -614,6 +674,8 @@ declare namespace ExcelWriter {
   type ChartType = XLSX.ChartType;
   type ScriptStyle = XLSX.ScriptStyle;
   type UnderlineStyle = XLSX.UnderlineStyle;
+  type FilterCriteria = XLSX.FilterCriteria;
+  type FilterOperator = XLSX.FilterOperator;
   type ValidationType = XLSX.ValidationType;
   type ValidationCriteria = XLSX.ValidationCriteria;
   type ValidationErrorType = XLSX.ValidationErrorType;

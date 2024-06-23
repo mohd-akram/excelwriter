@@ -8,6 +8,9 @@ class Worksheet : public Napi::ObjectWrap<Worksheet> {
   Worksheet(const Napi::CallbackInfo& info);
 
  private:
+  Napi::Value Autofilter(const Napi::CallbackInfo& info);
+  Napi::Value FilterColumn(const Napi::CallbackInfo& info);
+  Napi::Value FilterList(const Napi::CallbackInfo& info);
   Napi::Value DataValidationCell(const Napi::CallbackInfo& info);
   Napi::Value DataValidationRange(const Napi::CallbackInfo& info);
   Napi::Value FreezePanes(const Napi::CallbackInfo& info);

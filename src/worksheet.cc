@@ -5,6 +5,17 @@
 #include "format.h"
 #include "worksheet.h"
 
+class FilterRule {
+ public:
+  FilterRule(const Napi::Value& value);
+  inline operator lxw_filter_rule*() { return &filter_rule; };
+
+ private:
+  std::string value_string;
+
+  lxw_filter_rule filter_rule = {};
+};
+
 class DataValidation {
  public:
   DataValidation(const Napi::Value& value);
@@ -29,6 +40,12 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
       env,
       "Worksheet",
       {
+          InstanceMethod<&Worksheet::Autofilter>("autofilter",
+                                                 napi_default_method),
+          InstanceMethod<&Worksheet::FilterColumn>("filterColumn",
+                                                   napi_default_method),
+          InstanceMethod<&Worksheet::FilterList>("filterList",
+                                                 napi_default_method),
           InstanceMethod<&Worksheet::DataValidationCell>("dataValidationCell",
                                                          napi_default_method),
           InstanceMethod<&Worksheet::DataValidationRange>("dataValidationRange",
@@ -66,6 +83,43 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
 
           StaticValue("DEFAULT_ROW_HEIGHT",
                       Napi::Number::New(env, LXW_DEF_ROW_HEIGHT),
+                      napi_enumerable),
+
+          StaticValue("NONE_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_NONE),
+                      napi_enumerable),
+          StaticValue("EQUAL_TO_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_EQUAL_TO),
+                      napi_enumerable),
+          StaticValue("NOT_EQUAL_TO_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_NOT_EQUAL_TO),
+                      napi_enumerable),
+          StaticValue("GREATER_THAN_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_GREATER_THAN),
+                      napi_enumerable),
+          StaticValue("LESS_THAN_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_LESS_THAN),
+                      napi_enumerable),
+          StaticValue("GREATER_THAN_OR_EQUAL_TO_FILTER_CRITERIA",
+                      Napi::Number::New(
+                          env, LXW_FILTER_CRITERIA_GREATER_THAN_OR_EQUAL_TO),
+                      napi_enumerable),
+          StaticValue(
+              "LESS_THAN_OR_EQUAL_TO_FILTER_CRITERIA",
+              Napi::Number::New(env, LXW_FILTER_CRITERIA_LESS_THAN_OR_EQUAL_TO),
+              napi_enumerable),
+          StaticValue("BLANKS_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_BLANKS),
+                      napi_enumerable),
+          StaticValue("NON_BLANKS_FILTER_CRITERIA",
+                      Napi::Number::New(env, LXW_FILTER_CRITERIA_NON_BLANKS),
+                      napi_enumerable),
+
+          StaticValue("AND_FILTER",
+                      Napi::Number::New(env, LXW_FILTER_AND),
+                      napi_enumerable),
+          StaticValue("OR_FILTER",
+                      Napi::Number::New(env, LXW_FILTER_OR),
                       napi_enumerable),
 
           StaticValue("NONE_VALIDATION_TYPE",
@@ -194,6 +248,50 @@ Napi::Value Worksheet::New(Napi::Env env, lxw_worksheet* worksheet) {
       ->Get("WorksheetConstructor")
       .As<Napi::Function>()
       .New({Napi::External<lxw_worksheet>::New(env, worksheet)});
+}
+
+Napi::Value Worksheet::Autofilter(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  worksheet_autofilter(worksheet,
+                       info[0].As<Napi::Number>(),
+                       info[1].As<Napi::Number>().Uint32Value(),
+                       info[2].As<Napi::Number>(),
+                       info[3].As<Napi::Number>().Uint32Value());
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::FilterColumn(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  if (info.Length() >= 4)
+    worksheet_filter_column2(worksheet,
+                             info[0].As<Napi::Number>().Uint32Value(),
+                             FilterRule(info[1]),
+                             FilterRule(info[2]),
+                             info[3].As<Napi::Number>().Uint32Value());
+  else
+    worksheet_filter_column(worksheet,
+                            info[0].As<Napi::Number>().Uint32Value(),
+                            FilterRule(info[1]));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::FilterList(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  auto array = info[1].As<Napi::Array>();
+  auto length = array.Length();
+
+  std::vector<std::string> values;
+  for (uint32_t i = 0; i < length; i++)
+    values.push_back(array.Get(i).As<Napi::String>());
+
+  auto list = std::make_unique<const char*[]>(length + 1);
+  for (uint32_t i = 0; i < length; i++) list[i] = values[i].c_str();
+  list[length] = nullptr;
+
+  worksheet_filter_list(
+      worksheet, info[0].As<Napi::Number>().Uint32Value(), list.get());
+
+  return env.Undefined();
 }
 
 Napi::Value Worksheet::DataValidationCell(const Napi::CallbackInfo& info) {
@@ -412,6 +510,22 @@ lxw_datetime convertDatetime(const Napi::Object& date) {
 }
 
 }  // namespace
+
+FilterRule::FilterRule(const Napi::Value& val) {
+  auto obj = val.As<Napi::Object>();
+  auto criteria = obj.Get("criteria").As<Napi::Number>();
+  auto valueString = obj.Get("valueString");
+  auto value = obj.Get("value");
+
+  filter_rule.criteria = criteria.Uint32Value();
+
+  if (!valueString.IsUndefined()) {
+    value_string = valueString.As<Napi::String>();
+    filter_rule.value_string = value_string.c_str();
+  }
+
+  if (!value.IsUndefined()) filter_rule.value = value.As<Napi::Number>();
+}
 
 DataValidation::DataValidation(const Napi::Value& value) {
   auto obj = value.As<Napi::Object>();
