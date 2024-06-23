@@ -21,7 +21,7 @@ function writeWorksheetData(worksheet, format) {
   worksheet.writeNumber(...cell("E3"), 1);
   worksheet.writeNumber(...cell("F3"), 10);
 
-  worksheet.writeString(...cell("D4"), "List Data");
+  worksheet.writeString(...cell("D4"), "List data");
   worksheet.writeString(...cell("E4"), "open");
   worksheet.writeString(...cell("F4"), "high");
   worksheet.writeString(...cell("G4"), "close");
@@ -74,7 +74,7 @@ worksheet.dataValidationCell(...cell("B3"), {
  */
 worksheet.writeString(
   ...cell("A5"),
-  "Enter an integer not between 1 and 10 (using cell references)"
+  "Enter an integer that is not between 1 and 10 (using cell references)"
 );
 
 worksheet.dataValidationCell(...cell("B5"), {
@@ -121,7 +121,7 @@ worksheet.dataValidationCell(...cell("B11"), {
 /*
  * Example 6. Limiting input to a value in a dropdown list.
  */
-worksheet.writeString(...cell("A13"), "Select a value from a drop down list");
+worksheet.writeString(...cell("A13"), "Select a value from a dropdown list");
 
 worksheet.dataValidationCell(...cell("B13"), {
   validate: Worksheet.LIST_VALIDATION_TYPE,
@@ -133,7 +133,7 @@ worksheet.dataValidationCell(...cell("B13"), {
  */
 worksheet.writeString(
   ...cell("A15"),
-  "Select a value from a drop down list (using a cell range)"
+  "Select a value from a dropdown list (using a cell range)"
 );
 
 worksheet.dataValidationCell(...cell("B15"), {
@@ -146,14 +146,14 @@ worksheet.dataValidationCell(...cell("B15"), {
  */
 worksheet.writeString(
   ...cell("A17"),
-  "Enter a date between 1/1/2008 and 12/12/2008"
+  "Enter a date between 1/1/2024 and 12/12/2024"
 );
 
 worksheet.dataValidationCell(...cell("B17"), {
   validate: Worksheet.DATE_VALIDATION_TYPE,
   criteria: Worksheet.BETWEEN_VALIDATION_CRITERIA,
-  minimumDatetime: new Date(2008, 0, 1, 0, 0, 0),
-  maximumDatetime: new Date(2008, 11, 12, 0, 0, 0),
+  minimumDatetime: new Date(2024, 0, 1, 0, 0, 0),
+  maximumDatetime: new Date(2024, 11, 12, 0, 0, 0),
 });
 
 /*
