@@ -30,7 +30,7 @@ Workbook::Workbook(const Napi::CallbackInfo& info)
   options.output_buffer = const_cast<const char**>(&output_buffer);
   options.output_buffer_size = &output_buffer_size;
   workbook = workbook_new_opt(NULL, &options);
-  default_url_format = Napi::Persistent(
+  defaultURLFormat = Napi::Persistent(
       Format::New(info.Env(), workbook_get_default_url_format(workbook))
           .As<Napi::Object>());
 }
@@ -59,7 +59,7 @@ Napi::Value Workbook::AddWorksheet(const Napi::CallbackInfo& info) {
 }
 
 Napi::Value Workbook::GetDefaultURLFormat(const Napi::CallbackInfo& info) {
-  return default_url_format.Value();
+  return defaultURLFormat.Value();
 }
 
 Napi::Value Workbook::Close(const Napi::CallbackInfo& info) {

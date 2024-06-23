@@ -21,9 +21,8 @@ Napi::Object Chart::Init(Napi::Env env, Napi::Object exports) {
        StaticValue("AREA_STACKED_PERCENT_CHART",
                    Napi::Number::New(env, LXW_CHART_AREA_STACKED_PERCENT),
                    napi_enumerable),
-       StaticValue("BAR_CHART",
-                   Napi::Number::New(env, LXW_CHART_BAR),
-                   napi_enumerable),
+       StaticValue(
+           "BAR_CHART", Napi::Number::New(env, LXW_CHART_BAR), napi_enumerable),
        StaticValue("BAR_STACKED_CHART",
                    Napi::Number::New(env, LXW_CHART_BAR_STACKED),
                    napi_enumerable),
@@ -51,9 +50,8 @@ Napi::Object Chart::Init(Napi::Env env, Napi::Object exports) {
        StaticValue("LINE_STACKED_PERCENT_CHART",
                    Napi::Number::New(env, LXW_CHART_LINE_STACKED_PERCENT),
                    napi_enumerable),
-       StaticValue("PIE_CHART",
-                   Napi::Number::New(env, LXW_CHART_PIE),
-                   napi_enumerable),
+       StaticValue(
+           "PIE_CHART", Napi::Number::New(env, LXW_CHART_PIE), napi_enumerable),
        StaticValue("SCATTER_CHART",
                    Napi::Number::New(env, LXW_CHART_SCATTER),
                    napi_enumerable),
@@ -138,7 +136,7 @@ Napi::Value Chart::SetTitleNameFont(const Napi::CallbackInfo& info) {
   auto underline = options.Get("underline");
   auto rotation = options.Get("rotation");
   auto color = options.Get("color");
-  auto pitch_family = options.Get("pitchFamily");
+  auto pitchFamily = options.Get("pitchFamily");
   auto charset = options.Get("charset");
   auto baseline = options.Get("baseline");
   lxw_chart_font font = {};
@@ -156,8 +154,8 @@ Napi::Value Chart::SetTitleNameFont(const Napi::CallbackInfo& info) {
     font.rotation = rotation.As<Napi::Number>();
   if (!(color.IsUndefined() || color.IsNull()))
     font.color = color.As<Napi::Number>();
-  if (!(pitch_family.IsUndefined() || pitch_family.IsNull()))
-    font.pitch_family = pitch_family.As<Napi::Number>().Uint32Value();
+  if (!(pitchFamily.IsUndefined() || pitchFamily.IsNull()))
+    font.pitch_family = pitchFamily.As<Napi::Number>().Uint32Value();
   if (!(charset.IsUndefined() || charset.IsNull()))
     font.charset = charset.As<Napi::Number>().Uint32Value();
   if (!(baseline.IsUndefined() || baseline.IsNull()))

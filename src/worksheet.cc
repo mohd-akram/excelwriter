@@ -81,10 +81,12 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                                                   napi_default_method),
           InstanceMethod<&Worksheet::WriteURL>("writeURL", napi_default_method),
 
+          // Default
           StaticValue("DEFAULT_ROW_HEIGHT",
                       Napi::Number::New(env, LXW_DEF_ROW_HEIGHT),
                       napi_enumerable),
 
+          // Filter criteria
           StaticValue("NONE_FILTER_CRITERIA",
                       Napi::Number::New(env, LXW_FILTER_CRITERIA_NONE),
                       napi_enumerable),
@@ -115,6 +117,7 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                       Napi::Number::New(env, LXW_FILTER_CRITERIA_NON_BLANKS),
                       napi_enumerable),
 
+          // Filter operator
           StaticValue("AND_FILTER",
                       Napi::Number::New(env, LXW_FILTER_AND),
                       napi_enumerable),
@@ -122,6 +125,7 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                       Napi::Number::New(env, LXW_FILTER_OR),
                       napi_enumerable),
 
+          // Validation type
           StaticValue("NONE_VALIDATION_TYPE",
                       Napi::Number::New(env, LXW_VALIDATION_TYPE_NONE),
                       napi_enumerable),
@@ -178,6 +182,7 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                       Napi::Number::New(env, LXW_VALIDATION_TYPE_ANY),
                       napi_enumerable),
 
+          // Validation criteria
           StaticValue("NONE_VALIDATION_CRITERIA",
                       Napi::Number::New(env, LXW_VALIDATION_CRITERIA_NONE),
                       napi_enumerable),
@@ -212,6 +217,7 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                           env, LXW_VALIDATION_CRITERIA_LESS_THAN_OR_EQUAL_TO),
                       napi_enumerable),
 
+          // Validation error type
           StaticValue("STOP_VALIDATION_ERROR_TYPE",
                       Napi::Number::New(env, LXW_VALIDATION_ERROR_TYPE_STOP),
                       napi_enumerable),

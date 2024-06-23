@@ -1,7 +1,7 @@
 declare namespace XLSX {
   enum Alignment {
     /** No alignment. Cell will use Excel's default for the data type */
-    NONE_ALIGN = 0,
+    NONE_ALIGN,
     /** Left horizontal alignment */
     LEFT_ALIGN,
     /** Center horizontal alignment */
@@ -30,7 +30,7 @@ declare namespace XLSX {
 
   enum BorderStyle {
     /** No border */
-    NONE_BORDER = 0,
+    NONE_BORDER,
     /** Thin border style */
     THIN_BORDER,
     /** Medium border style */
@@ -114,7 +114,7 @@ declare namespace XLSX {
   }
 
   enum UnderlineStyle {
-    NONE_UNDERLINE = 0,
+    NONE_UNDERLINE,
     /** Single underline */
     SINGLE_UNDERLINE,
     /** Double underline */
@@ -153,7 +153,7 @@ declare namespace XLSX {
   }
 
   enum ValidationType {
-    NONE_VALIDATION_TYPE = 0,
+    NONE_VALIDATION_TYPE,
     /** Restrict cell input to whole/integer numbers only. */
     INTEGER_VALIDATION_TYPE,
     /** Restrict cell input to whole/integer numbers only, using a cell reference. */
@@ -189,7 +189,7 @@ declare namespace XLSX {
   }
 
   enum ValidationCriteria {
-    NONE_VALIDATION_CRITERIA = 0,
+    NONE_VALIDATION_CRITERIA,
     /** Select data between two values. */
     BETWEEN_VALIDATION_CRITERIA,
     /** Select data that is not between two values. */
@@ -210,7 +210,7 @@ declare namespace XLSX {
 
   enum ValidationErrorType {
     /** Show a "Stop" data validation pop-up message. This is the default. */
-    STOP_VALIDATION_ERROR_TYPE = 0,
+    STOP_VALIDATION_ERROR_TYPE,
     /** Show an "Error" data validation pop-up message. */
     WARNING_VALIDATION_ERROR_TYPE,
     /** Show an "Information" data validation pop-up message. */

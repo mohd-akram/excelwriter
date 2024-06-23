@@ -13,7 +13,8 @@ class Workbook : public Napi::ObjectWrap<Workbook> {
   Napi::Value AddWorksheet(const Napi::CallbackInfo& info);
   Napi::Value GetDefaultURLFormat(const Napi::CallbackInfo& info);
   Napi::Value Close(const Napi::CallbackInfo& info);
-  Napi::ObjectReference default_url_format;
+  Napi::ObjectReference defaultURLFormat;
+
   lxw_workbook* workbook = nullptr;
   char* output_buffer = nullptr;
   size_t output_buffer_size = 0;

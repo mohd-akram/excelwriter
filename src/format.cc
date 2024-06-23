@@ -43,6 +43,7 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
        InstanceMethod<&Format::SetNumFormat>("setNumFormat",
                                              napi_default_method),
 
+       // Alignment
        StaticValue("NONE_ALIGN",
                    Napi::Number::New(env, LXW_ALIGN_NONE),
                    napi_enumerable),
@@ -83,6 +84,7 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
                    Napi::Number::New(env, LXW_ALIGN_VERTICAL_DISTRIBUTED),
                    napi_enumerable),
 
+       // Border
        StaticValue("NONE_BORDER",
                    Napi::Number::New(env, LXW_BORDER_NONE),
                    napi_enumerable),
@@ -126,6 +128,7 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
                    Napi::Number::New(env, LXW_BORDER_SLANT_DASH_DOT),
                    napi_enumerable),
 
+       // Script
        StaticValue("SUPERSCRIPT_FONT",
                    Napi::Number::New(env, LXW_FONT_SUPERSCRIPT),
                    napi_enumerable),
@@ -133,6 +136,7 @@ Napi::Object Format::Init(Napi::Env env, Napi::Object exports) {
                    Napi::Number::New(env, LXW_FONT_SUBSCRIPT),
                    napi_enumerable),
 
+       // Underline
        StaticValue("NONE_UNDERLINE",
                    Napi::Number::New(env, LXW_UNDERLINE_NONE),
                    napi_enumerable),
