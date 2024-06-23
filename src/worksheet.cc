@@ -2,6 +2,7 @@
 #include <xlsxwriter.h>
 
 #include "chart.h"
+#include "error.h"
 #include "format.h"
 #include "worksheet.h"
 
@@ -258,26 +259,30 @@ Napi::Value Worksheet::New(Napi::Env env, lxw_worksheet* worksheet) {
 
 Napi::Value Worksheet::Autofilter(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_autofilter(worksheet,
-                       info[0].As<Napi::Number>(),
-                       info[1].As<Napi::Number>().Uint32Value(),
-                       info[2].As<Napi::Number>(),
-                       info[3].As<Napi::Number>().Uint32Value());
+  checkError(env,
+             worksheet_autofilter(worksheet,
+                                  info[0].As<Napi::Number>(),
+                                  info[1].As<Napi::Number>().Uint32Value(),
+                                  info[2].As<Napi::Number>(),
+                                  info[3].As<Napi::Number>().Uint32Value()));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::FilterColumn(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   if (info.Length() >= 4)
-    worksheet_filter_column2(worksheet,
-                             info[0].As<Napi::Number>().Uint32Value(),
-                             FilterRule(info[1]),
-                             FilterRule(info[2]),
-                             info[3].As<Napi::Number>().Uint32Value());
+    checkError(
+        env,
+        worksheet_filter_column2(worksheet,
+                                 info[0].As<Napi::Number>().Uint32Value(),
+                                 FilterRule(info[1]),
+                                 FilterRule(info[2]),
+                                 info[3].As<Napi::Number>().Uint32Value()));
   else
-    worksheet_filter_column(worksheet,
-                            info[0].As<Napi::Number>().Uint32Value(),
-                            FilterRule(info[1]));
+    checkError(env,
+               worksheet_filter_column(worksheet,
+                                       info[0].As<Napi::Number>().Uint32Value(),
+                                       FilterRule(info[1])));
   return env.Undefined();
 }
 
@@ -295,29 +300,35 @@ Napi::Value Worksheet::FilterList(const Napi::CallbackInfo& info) {
   for (uint32_t i = 0; i < length; i++) list[i] = values[i].c_str();
   list[length] = nullptr;
 
-  worksheet_filter_list(
-      worksheet, info[0].As<Napi::Number>().Uint32Value(), list.get());
+  checkError(
+      env,
+      worksheet_filter_list(
+          worksheet, info[0].As<Napi::Number>().Uint32Value(), list.get()));
 
   return env.Undefined();
 }
 
 Napi::Value Worksheet::DataValidationCell(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_data_validation_cell(worksheet,
-                                 info[0].As<Napi::Number>(),
-                                 info[1].As<Napi::Number>().Uint32Value(),
-                                 DataValidation(info[2]));
+  checkError(
+      env,
+      worksheet_data_validation_cell(worksheet,
+                                     info[0].As<Napi::Number>(),
+                                     info[1].As<Napi::Number>().Uint32Value(),
+                                     DataValidation(info[2])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::DataValidationRange(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_data_validation_range(worksheet,
-                                  info[0].As<Napi::Number>(),
-                                  info[1].As<Napi::Number>().Uint32Value(),
-                                  info[2].As<Napi::Number>(),
-                                  info[3].As<Napi::Number>().Uint32Value(),
-                                  DataValidation(info[4]));
+  checkError(
+      env,
+      worksheet_data_validation_range(worksheet,
+                                      info[0].As<Napi::Number>(),
+                                      info[1].As<Napi::Number>().Uint32Value(),
+                                      info[2].As<Napi::Number>(),
+                                      info[3].As<Napi::Number>().Uint32Value(),
+                                      DataValidation(info[4])));
   return env.Undefined();
 }
 
@@ -338,43 +349,50 @@ Napi::Value Worksheet::SplitPanes(const Napi::CallbackInfo& info) {
 
 Napi::Value Worksheet::InsertChart(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_insert_chart(worksheet,
-                         info[0].As<Napi::Number>(),
-                         info[1].As<Napi::Number>().Uint32Value(),
-                         Chart::Get(info[2]));
+  checkError(env,
+             worksheet_insert_chart(worksheet,
+                                    info[0].As<Napi::Number>(),
+                                    info[1].As<Napi::Number>().Uint32Value(),
+                                    Chart::Get(info[2])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::InsertImage(const Napi::CallbackInfo& info) {
   auto env = info.Env();
   auto buffer = info[2].As<Napi::Uint8Array>();
-  worksheet_insert_image_buffer(worksheet,
-                                info[0].As<Napi::Number>(),
-                                info[1].As<Napi::Number>().Uint32Value(),
-                                buffer.Data(),
-                                buffer.ByteLength());
+  checkError(
+      env,
+      worksheet_insert_image_buffer(worksheet,
+                                    info[0].As<Napi::Number>(),
+                                    info[1].As<Napi::Number>().Uint32Value(),
+                                    buffer.Data(),
+                                    buffer.ByteLength()));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::MergeRange(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_merge_range(worksheet,
-                        info[0].As<Napi::Number>(),
-                        info[1].As<Napi::Number>().Uint32Value(),
-                        info[2].As<Napi::Number>(),
-                        info[3].As<Napi::Number>().Uint32Value(),
-                        info[4].As<Napi::String>().Utf8Value().c_str(),
-                        info[5].IsUndefined() ? nullptr : Format::Get(info[5]));
+  checkError(env,
+             worksheet_merge_range(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::Number>(),
+                 info[3].As<Napi::Number>().Uint32Value(),
+                 info[4].As<Napi::String>().Utf8Value().c_str(),
+                 info[5].IsUndefined() ? nullptr : Format::Get(info[5])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::SetColumn(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_set_column(worksheet,
-                       info[0].As<Napi::Number>().Uint32Value(),
-                       info[1].As<Napi::Number>().Uint32Value(),
-                       info[2].As<Napi::Number>(),
-                       info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_set_column(
+                 worksheet,
+                 info[0].As<Napi::Number>().Uint32Value(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::Number>(),
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 
@@ -391,51 +409,59 @@ Napi::Value Worksheet::SetRow(const Napi::CallbackInfo& info) {
       options.level = level.As<Napi::Number>().Uint32Value();
     if (!collapsed.IsUndefined())
       options.collapsed = collapsed.As<Napi::Boolean>();
-    worksheet_set_row_opt(worksheet,
-                          info[0].As<Napi::Number>(),
-                          info[1].As<Napi::Number>(),
-                          info[2].IsNull() ? nullptr : Format::Get(info[2]),
-                          &options);
+    checkError(
+        env,
+        worksheet_set_row_opt(worksheet,
+                              info[0].As<Napi::Number>(),
+                              info[1].As<Napi::Number>(),
+                              info[2].IsNull() ? nullptr : Format::Get(info[2]),
+                              &options));
   } else
-    worksheet_set_row(worksheet,
-                      info[0].As<Napi::Number>(),
-                      info[1].As<Napi::Number>(),
-                      info[2].IsUndefined() ? nullptr : Format::Get(info[2]));
+    checkError(env,
+               worksheet_set_row(
+                   worksheet,
+                   info[0].As<Napi::Number>(),
+                   info[1].As<Napi::Number>(),
+                   info[2].IsUndefined() ? nullptr : Format::Get(info[2])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::SetFooter(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_set_footer(worksheet,
-                       info[0].As<Napi::String>().Utf8Value().c_str());
+  checkError(env,
+             worksheet_set_footer(
+                 worksheet, info[0].As<Napi::String>().Utf8Value().c_str()));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::SetHeader(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_set_header(worksheet,
-                       info[0].As<Napi::String>().Utf8Value().c_str());
+  checkError(env,
+             worksheet_set_header(
+                 worksheet, info[0].As<Napi::String>().Utf8Value().c_str()));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::SetSelection(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_set_selection(worksheet,
-                          info[0].As<Napi::Number>(),
-                          info[1].As<Napi::Number>().Uint32Value(),
-                          info[2].As<Napi::Number>(),
-                          info[3].As<Napi::Number>().Uint32Value());
+  checkError(env,
+             worksheet_set_selection(worksheet,
+                                     info[0].As<Napi::Number>(),
+                                     info[1].As<Napi::Number>().Uint32Value(),
+                                     info[2].As<Napi::Number>(),
+                                     info[3].As<Napi::Number>().Uint32Value()));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::WriteBoolean(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_write_boolean(
-      worksheet,
-      info[0].As<Napi::Number>(),
-      info[1].As<Napi::Number>().Uint32Value(),
-      info[2].As<Napi::Boolean>(),
-      info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_write_boolean(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::Boolean>(),
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 
@@ -448,55 +474,61 @@ Napi::Value Worksheet::WriteDatetime(const Napi::CallbackInfo& info) {
                     .As<Napi::Number>()
                     .Int32Value() *
                 60;
-  worksheet_write_unixtime(
-      worksheet,
-      info[0].As<Napi::Number>(),
-      info[1].As<Napi::Number>().Uint32Value(),
-      info[2].As<Napi::Date>() / 1000 - offset,
-      info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_write_unixtime(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::Date>() / 1000 - offset,
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::WriteFormula(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_write_formula(
-      worksheet,
-      info[0].As<Napi::Number>(),
-      info[1].As<Napi::Number>().Uint32Value(),
-      info[2].As<Napi::String>().Utf8Value().c_str(),
-      info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_write_formula(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::String>().Utf8Value().c_str(),
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::WriteNumber(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_write_number(
-      worksheet,
-      info[0].As<Napi::Number>(),
-      info[1].As<Napi::Number>().Uint32Value(),
-      info[2].As<Napi::Number>(),
-      info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_write_number(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::Number>(),
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::WriteString(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_write_string(
-      worksheet,
-      info[0].As<Napi::Number>(),
-      info[1].As<Napi::Number>().Uint32Value(),
-      info[2].As<Napi::String>().Utf8Value().c_str(),
-      info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_write_string(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::String>().Utf8Value().c_str(),
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 
 Napi::Value Worksheet::WriteURL(const Napi::CallbackInfo& info) {
   auto env = info.Env();
-  worksheet_write_url(worksheet,
-                      info[0].As<Napi::Number>(),
-                      info[1].As<Napi::Number>().Uint32Value(),
-                      info[2].As<Napi::String>().Utf8Value().c_str(),
-                      info[3].IsUndefined() ? nullptr : Format::Get(info[3]));
+  checkError(env,
+             worksheet_write_url(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::String>().Utf8Value().c_str(),
+                 info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
   return env.Undefined();
 }
 

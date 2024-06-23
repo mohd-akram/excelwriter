@@ -2,6 +2,7 @@
 #include <xlsxwriter.h>
 
 #include "chart.h"
+#include "error.h"
 #include "format.h"
 #include "workbook.h"
 #include "worksheet.h"
@@ -63,9 +64,9 @@ Napi::Value Workbook::GetDefaultURLFormat(const Napi::CallbackInfo& info) {
 }
 
 Napi::Value Workbook::Close(const Napi::CallbackInfo& info) {
-  workbook_close(workbook);
-  workbook = nullptr;
   auto env = info.Env();
+  checkError(env, workbook_close(workbook));
+  workbook = nullptr;
   return Napi::ArrayBuffer::New(
       env, output_buffer, output_buffer_size, [](Napi::Env env, void* data) {
         free(data);
