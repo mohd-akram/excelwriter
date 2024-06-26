@@ -636,6 +636,20 @@ declare namespace ExcelWriter {
       formula: string,
       format?: Format
     ): void;
+    writeFormulaNumber(
+      row: number,
+      column: number,
+      formula: string,
+      format: Format | null,
+      result: number
+    ): void;
+    writeFormulaString(
+      row: number,
+      column: number,
+      formula: string,
+      format: Format | null,
+      result: string
+    ): void;
     writeNumber(
       row: number,
       column: number,

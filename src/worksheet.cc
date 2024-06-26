@@ -76,6 +76,10 @@ Napi::Object Worksheet::Init(Napi::Env env, Napi::Object exports) {
                                                     napi_default_method),
           InstanceMethod<&Worksheet::WriteFormula>("writeFormula",
                                                    napi_default_method),
+          InstanceMethod<&Worksheet::WriteFormulaNumber>("writeFormulaNumber",
+                                                         napi_default_method),
+          InstanceMethod<&Worksheet::WriteFormulaString>("writeFormulaString",
+                                                         napi_default_method),
           InstanceMethod<&Worksheet::WriteNumber>("writeNumber",
                                                   napi_default_method),
           InstanceMethod<&Worksheet::WriteString>("writeString",
@@ -484,6 +488,32 @@ Napi::Value Worksheet::WriteFormula(const Napi::CallbackInfo& info) {
                  info[1].As<Napi::Number>().Uint32Value(),
                  info[2].As<Napi::String>().Utf8Value().c_str(),
                  info[3].IsUndefined() ? nullptr : Format::Get(info[3])));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::WriteFormulaNumber(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  checkError(env,
+             worksheet_write_formula_num(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::String>().Utf8Value().c_str(),
+                 info[3].IsNull() ? nullptr : Format::Get(info[3]),
+                 info[4].As<Napi::Number>()));
+  return env.Undefined();
+}
+
+Napi::Value Worksheet::WriteFormulaString(const Napi::CallbackInfo& info) {
+  auto env = info.Env();
+  checkError(env,
+             worksheet_write_formula_str(
+                 worksheet,
+                 info[0].As<Napi::Number>(),
+                 info[1].As<Napi::Number>().Uint32Value(),
+                 info[2].As<Napi::String>().Utf8Value().c_str(),
+                 info[3].IsNull() ? nullptr : Format::Get(info[3]),
+                 info[4].As<Napi::String>().Utf8Value().c_str()));
   return env.Undefined();
 }
 
